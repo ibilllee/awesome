@@ -1,0 +1,16 @@
+server:
+  port: 8001
+  servlet:
+    context-path: /user-service
+
+spring:
+  application:
+    name: user-service
+  cloud:
+    nacos:
+      server-addr: 119.91.73.146:8848
+      discovery:
+        username: nacos
+        password: PublicCode2001!
+        namespace: public
+

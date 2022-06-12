@@ -1,0 +1,16 @@
+server:
+  port: 8002
+  servlet:
+    context-path: /space-service
+
+spring:
+  application:
+    name: space-service
+  cloud:
+    nacos:
+      server-addr: 119.91.73.146:8848
+      discovery:
+        username: nacos
+        password: PublicCode2001!
+        namespace: public
+
