@@ -1,4 +1,4 @@
-package com.scut.board.controller;
+package com.scut.user.controller;
 
 import com.scut.common.dto.request.BoardCommentParam;
 import com.scut.common.dto.request.IdParam;
@@ -29,7 +29,7 @@ public class BoardCommentController {
 
     @GetMapping("/get")
     @ApiOperation(value = "/get", notes = "显示评论")
-    public MultiResponse<BoardCommentDto> getComment(@RequestParam int id) {
+    public MultiResponse<BoardCommentDto> getComment(int id) {
         return null;
     }
 }
