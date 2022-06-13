@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "游戏信息")
-public class GameDto {
+public class GameDetailsDto {
     int id; //游戏id
     String name; //游戏名称
     String cover; //封面地址

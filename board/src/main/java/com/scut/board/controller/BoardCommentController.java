@@ -1,7 +1,7 @@
 package com.scut.board.controller;
 
-import com.scut.common.dto.request.CommentParam;
-import com.scut.common.dto.response.CommentDto;
+import com.scut.common.dto.request.BoardCommentParam;
+import com.scut.common.dto.response.BoardCommentDto;
 import com.scut.common.response.SingleResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(value = "comment", description = "评论")
 @Slf4j
-public class CommentController {
+public class BoardCommentController {
     @GetMapping("/submit")
     @ApiOperation(value = "/submit", notes = "添加评论")
-    public SingleResponse<CommentDto> addComment(@RequestBody CommentParam comment) {
+    public SingleResponse<BoardCommentDto> addComment(@RequestBody BoardCommentParam comment) {
         return null;
     }
 

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "评论")
-public class CommentParam {
+public class BoardCommentParam {
     @ApiModelProperty(value = "游戏ID")
     int id;
     @ApiModelProperty(value = "评价分数")
