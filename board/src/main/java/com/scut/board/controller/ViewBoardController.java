@@ -1,6 +1,6 @@
 package com.scut.board.controller;
 
-import com.scut.common.dto.request.BoardDto;
+import com.scut.common.dto.response.GameForBoardDto;
 import com.scut.common.response.MultiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,13 +17,13 @@ public class ViewBoardController {
 
     @GetMapping("/getHottest")
     @ApiOperation(value = "/getHottest", notes = "最热排行榜")
-    public MultiResponse<BoardDto> getHottest() {
+    public MultiResponse<GameForBoardDto> getHottest() {
         return null;
     }
 
     @GetMapping("/getLatest")
     @ApiOperation(value = "/getLatest", notes = "最新排行榜")
-    public MultiResponse<BoardDto> getLatest() {
+    public MultiResponse<GameForBoardDto> getLatest() {
         return null;
     }
 

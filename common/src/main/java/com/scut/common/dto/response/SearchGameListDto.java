@@ -1,4 +1,4 @@
-package com.scut.common.dto.request;
+package com.scut.common.dto.response;
 
 public class SearchGameListDto
 {
