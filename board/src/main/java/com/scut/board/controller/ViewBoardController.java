@@ -1,4 +1,4 @@
-package com.scut.user.controller;
+package com.scut.board.controller;
 
 import com.scut.common.dto.response.GameForBoardDto;
 import com.scut.common.response.MultiResponse;

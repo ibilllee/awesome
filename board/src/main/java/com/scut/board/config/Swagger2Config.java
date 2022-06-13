@@ -1,4 +1,4 @@
-package com.scut.user.config;
+package com.scut.board.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

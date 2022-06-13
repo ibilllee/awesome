@@ -1,4 +1,4 @@
-package com.scut.user.controller;
+package com.scut.board.controller;
 
 import com.scut.common.dto.response.GameDetailsDto;
 import com.scut.common.dto.response.SearchGameListDto;
