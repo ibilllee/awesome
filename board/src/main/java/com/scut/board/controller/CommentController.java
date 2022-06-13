@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
     @GetMapping("/submit")
     @ApiOperation(value = "/submit", notes = "添加评论")
-    public SingleResponse<CommentDto> searchGame(@RequestBody CommentParam comment) {
+    public SingleResponse<CommentDto> addComment(@RequestBody CommentParam comment) {
         return null;
     }
 
     @GetMapping("/remove")
     @ApiOperation(value = "/remove", notes = "删除评论")
-    public SingleResponse<Integer> removeGame(@RequestBody long id) {
+    public SingleResponse<Integer> removeComment(@RequestBody long id) {
         return null;
     }
 }

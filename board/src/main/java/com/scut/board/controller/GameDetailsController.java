@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GameDetailsController {
     @GetMapping("/search")
     @ApiOperation(value = "/search", notes = "游戏详情")
-    public SingleResponse<GameDto> searchGame(@RequestParam long id) {
+    public SingleResponse<GameDto> getGameDetails(@RequestParam long id) {
         return null;
     }
 
