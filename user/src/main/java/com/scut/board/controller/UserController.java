@@ -1,6 +1,6 @@
-package com.scut.user.controller;
+package com.scut.board.controller;
 
-import com.scut.common.dto.request.RegisterAndLoginParam;
+import com.scut.common.dto.request.*;
 import com.scut.common.dto.response.TokenDto;
 import com.scut.common.dto.response.UserDto;
 import com.scut.common.response.SingleResponse;
@@ -46,25 +46,25 @@ public class UserController {
 
     @PutMapping("/update/username")
     @ApiOperation(value = "/update/username", notes = "更新用户名")
-    public SingleResponse<UserDto> updateUsername(@RequestBody String username) {
+    public SingleResponse<UserDto> updateUsername(@RequestBody UsernameParam usernameParam) {
         return null;
     }
 
     @PutMapping("/update/introduce")
     @ApiOperation(value = "/update/introduce", notes = "更新个性签名")
-    public SingleResponse<UserDto> updateIntroduce(@RequestBody String introduce) {
+    public SingleResponse<UserDto> updateIntroduce(@RequestBody IntroduceParam introduceParam) {
         return null;
     }
 
     @PutMapping("/update/avatar")
     @ApiOperation(value = "/update/avatar", notes = "更新头像地址")
-    public SingleResponse<UserDto> updateAvatar(@RequestBody String avatar) {
+    public SingleResponse<UserDto> updateAvatar(@RequestBody AvatarParam avatarParam) {
         return null;
     }
 
     @PutMapping("/update/password")
     @ApiOperation(value = "/update/password", notes = "修改密码")
-    public SingleResponse<UserDto> updatePassword(@RequestBody String password) {
+    public SingleResponse<UserDto> updatePassword(@RequestBody PasswordParam passwordParam) {
         return null;
     }
 

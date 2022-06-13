@@ -13,6 +13,7 @@
         <module>board</module>
         <module>forum</module>
         <module>inform</module>
+        <module>file</module>
     </modules>
     <name>awesome</name>
     <description>awesome</description>
