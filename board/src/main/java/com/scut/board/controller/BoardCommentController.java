@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/comment")
+@RequestMapping("/board-comment")
 @RestController
-@Api(value = "comment", description = "评论")
+@Api(value = "board-comment", description = "评论")
 @Slf4j
 public class BoardCommentController {
     @GetMapping("/submit")
