@@ -1,6 +1,7 @@
 package com.scut.board.controller;
 
 import com.scut.common.dto.request.BoardCommentParam;
+import com.scut.common.dto.request.IdParam;
 import com.scut.common.dto.response.BoardCommentDto;
 import com.scut.common.response.MultiResponse;
 import com.scut.common.response.SingleResponse;
@@ -22,7 +23,7 @@ public class BoardCommentController {
 
     @DeleteMapping("/remove")
     @ApiOperation(value = "/remove", notes = "删除评论")
-    public SingleResponse<Integer> removeComment(@RequestBody long id) {
+    public SingleResponse<Integer> removeComment(@RequestBody IdParam id) {
         return null;
     }
 
