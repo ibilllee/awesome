@@ -10,7 +10,6 @@
         <module>gateway</module>
         <module>user</module>
         <module>space</module>
-        <module>space</module>
         <module>board</module>
         <module>forum</module>
         <module>inform</module>
