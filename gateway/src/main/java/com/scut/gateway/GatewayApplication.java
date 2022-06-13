@@ -1,4 +1,4 @@
-package gateway;
+package com.scut.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

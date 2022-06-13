@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "提交ID参数")
 public class IdParam {
     @ApiModelProperty(value = "ID", required = true)
-    private String id;
+    private long id;
 }
