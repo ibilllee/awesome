@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(description = "排行榜信息")
 public class GameForBoardDto {
-    int id; //游戏id
+    long id; //游戏id
     String name; //游戏名称
     String cover; //封面地址
     String logo; //logo地址

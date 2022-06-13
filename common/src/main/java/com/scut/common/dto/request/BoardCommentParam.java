@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "评论")
 public class BoardCommentParam {
     @ApiModelProperty(value = "游戏ID")
-    int id;
+    long id;
     @ApiModelProperty(value = "评价分数")
-    int score;
+    long score;
     @ApiModelProperty(value = "评价内容")
     String comment;
 }

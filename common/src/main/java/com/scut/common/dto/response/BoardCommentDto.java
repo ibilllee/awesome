@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(description = "游戏评论")
 public class BoardCommentDto {
-    int id; //评论id
-    int gameId; //游戏id
-    int userId; //用户id
+    long id; //评论id
+    long gameId; //游戏id
+    long userId; //用户id
     String username; //用户名
     String content; //评论内容
-    int score; //打分
-    int createTime; //评论创建时间
+    long score; //打分
+    long createTime; //评论创建时间
 }
