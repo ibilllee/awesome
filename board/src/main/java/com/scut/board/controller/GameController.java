@@ -22,7 +22,7 @@ public class GameController {
 
     @GetMapping("/search")
     @ApiOperation(value = "/search", notes = "搜索游戏")
-    public MultiResponse<SearchGameListDto> searchGame(@RequestBody String name) {
+    public MultiResponse<SearchGameListDto> searchGame(@RequestParam String name) {
         return null;
     }
 
