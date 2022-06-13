@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.*;
 public class GameController {
     @GetMapping("/get")
     @ApiOperation(value = "/get", notes = "游戏详情")
-    public SingleResponse<GameDetailsDto> getGameDetails(@RequestParam long id) {
+    public SingleResponse<GameDetailsDto> getGameDetails( long id) {
         return null;
     }
 
     @GetMapping("/search")
     @ApiOperation(value = "/search", notes = "搜索游戏")
-    public MultiResponse<SearchGameListDto> searchGame(@RequestParam String name) {
+    public MultiResponse<SearchGameListDto> searchGame( String name) {
         return null;
     }
 
     @GetMapping("/download")
     @ApiOperation(value = "/download", notes = "下载游戏")
-    public SingleResponse<String> downloadGame(@RequestParam long id) {
+    public SingleResponse<String> downloadGame( long id) {
         return null;
     }
 }

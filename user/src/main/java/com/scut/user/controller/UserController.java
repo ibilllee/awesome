@@ -1,4 +1,4 @@
-package com.scut.board.controller;
+package com.scut.user.controller;
 
 import com.scut.common.dto.request.*;
 import com.scut.common.dto.response.TokenDto;

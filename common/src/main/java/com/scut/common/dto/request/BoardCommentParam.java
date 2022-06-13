@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(description = "评论")
 public class BoardCommentParam {
-    @ApiModelProperty(value = "游戏ID")
+    @ApiModelProperty(value = "游戏ID",required = true)
     long id;
-    @ApiModelProperty(value = "评价分数")
+    @ApiModelProperty(value = "评价分数",required = true)
     long score;
     @ApiModelProperty(value = "评价内容")
     String comment;

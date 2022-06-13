@@ -1,4 +1,4 @@
-package com.scut.board.controller;
+package com.scut.user.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

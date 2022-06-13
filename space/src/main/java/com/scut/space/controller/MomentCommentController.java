@@ -1,5 +1,6 @@
 package com.scut.space.controller;
 
+import com.scut.common.dto.request.IdParam;
 import com.scut.common.dto.request.MomentCommentListParam;
 import com.scut.common.dto.request.MomentCommentParam;
 import com.scut.common.dto.response.MomentCommentDto;
@@ -23,19 +24,19 @@ public class MomentCommentController {
 
     @GetMapping("/get")
     @ApiOperation(value = "/get", notes = "获取动态评论")
-    public SingleResponse<MomentCommentDto> get(@RequestParam long id) {
+    public SingleResponse<MomentCommentDto> get( long id) {
         return null;
     }
 
     @GetMapping("/list")
     @ApiOperation(value = "/list", notes = "获取动态评论列表")
-    public MultiResponse<MomentCommentDto> list(@RequestParam MomentCommentListParam momentCommentListParam) {
+    public MultiResponse<MomentCommentDto> list( MomentCommentListParam momentCommentListParam) {
         return null;
     }
 
     @DeleteMapping("/remove")
     @ApiOperation(value = "/remove", notes = "删除动态评论")
-    public SingleResponse<Integer> delete(@RequestBody long id) {
+    public SingleResponse<Integer> delete(@RequestBody IdParam idParam) {
         return null;
     }
 }
