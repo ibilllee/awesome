@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(description = "提交文章参数")
-public class ArticleCommentParam {
-    @ApiModelProperty(value = "文章ID", required = true)
-    private long articleId;
+@ApiModel(description = "提交动态评论参数")
+public class MomentCommentParam {
+    @ApiModelProperty(value = "动态ID", required = true)
+    private long momentId;
     @ApiModelProperty(value = "评论内容", required = true)
     private String content;
     @ApiModelProperty(value = "回复评论ID", required = true)

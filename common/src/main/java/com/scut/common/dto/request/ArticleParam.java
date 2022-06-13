@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(description = "提交文章参数")
 public class ArticleParam {
-    @ApiModelProperty(value = "用户ID", required = true)
-    private long userId;
     @ApiModelProperty(value = "文章标题", required = true)
     private String title;
     @ApiModelProperty(value = "文章内容", required = true)

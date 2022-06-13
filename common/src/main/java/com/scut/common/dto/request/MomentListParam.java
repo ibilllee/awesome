@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(description = "提交论坛参数")
-public class ForumParam {
-    @ApiModelProperty(value = "对应游戏ID", required = true)
-    private String gameId;
+@ApiModel(description = "获得动态列表参数")
+public class MomentListParam {
+    @ApiModelProperty(value = "第几页", required = true)
+    private int page;
+    @ApiModelProperty(value = "页大小", required = true)
+    private int size;
 }
