@@ -1,4 +1,4 @@
-package com.scut.user.config;
+package com.scut.file.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,15 +19,15 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.scut.user.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.scut.file.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("User")
-                .description("用户服务")
+                .title("File")
+                .description("文件服务")
                 .contact("SCUT")
                 .version("Beta 0.1")
                 .build();

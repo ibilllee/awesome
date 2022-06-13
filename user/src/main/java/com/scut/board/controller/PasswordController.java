@@ -1,12 +1,10 @@
-package com.scut.user.controller;
+package com.scut.board.controller;
 
-import com.scut.common.response.SingleResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Api(value = "interactive", description = "点击邮件中的链接")

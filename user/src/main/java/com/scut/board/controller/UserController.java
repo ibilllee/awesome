@@ -1,4 +1,4 @@
-package com.scut.user.controller;
+package com.scut.board.controller;
 
 import com.scut.common.dto.request.RegisterAndLoginParam;
 import com.scut.common.dto.response.TokenDto;
