@@ -19,4 +19,7 @@ public interface ForumMapper extends BaseMapper<Forum> {
 
     @Update(" UPDATE forum SET favor_count = favor_count + #{value} WHERE id = #{id} ")
     void updateFavorCount(@Param("id") long id, @Param("value") int value);
+
+    @Update(" UPDATE forum SET article_count = article_count + #{value} WHERE id = #{id} ")
+    void updateArticleCount(@Param("id") long id, @Param("value") int value);
 }

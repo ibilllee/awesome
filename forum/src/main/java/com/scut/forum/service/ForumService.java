@@ -16,6 +16,7 @@ import com.scut.forum.mapper.ForumMapper;
 import com.scut.forum.mapper.ForumTagMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class ForumService {
         return forumsToForumDtos(forums);
     }
 
-    public List<ForumDto> getMyList(ForumListParam forumListParam, long userId) {
+    public List<ForumDto> getFavorList(ForumListParam forumListParam, long userId) {
         Page<Forum> forumPage = new Page<>(forumListParam.getPage(), forumListParam.getSize());
         Page<Forum> page = new LambdaQueryChainWrapper<>(forumMapper)
                 .exists(" SELECT 1 FROM forum_favor WHERE forum.id = forum_id AND " + userId + " = user_id")
@@ -98,6 +99,9 @@ public class ForumService {
     }
 
     public ForumTagDto submitTag(ForumTagParam forumTagParam) {
+        if (forumTagMapper.isExist(forumTagParam.getContent()) != null) {
+            return null;
+        }
         ForumTag forumTag = new ForumTag(0L, forumTagParam.getForumId(), forumTagParam.getContent());
         if (forumTagMapper.insert(forumTag) == 1) {
             return new ForumTagDto(forumTag.getId(), forumTag.getForumId(), forumTag.getContent());
@@ -123,16 +127,15 @@ public class ForumService {
 
     @Transactional
     public int favor(long id, long userId) {
-        Forum forum = forumMapper.selectById(id);
-        if (forum == null) return -1;
+        if (forumMapper.selectById(id) == null) return -1;
         ForumFavor forumFavor = forumFavorMapper.selectOne(new QueryWrapper<ForumFavor>()
                 .eq("forum_id", id).eq("user_id", userId));
         if (forumFavor == null) {
-            forumFavor = new ForumFavor(0L, userId,id);
-            if(forumFavorMapper.insert(forumFavor)==1){
+            forumFavor = new ForumFavor(0L, userId, id);
+            if (forumFavorMapper.insert(forumFavor) == 1) {
                 forumMapper.updateFavorCount(id, 1);
                 return 1;
-            }else {
+            } else {
                 return 0;
             }
         } else {
@@ -142,26 +145,24 @@ public class ForumService {
 
     @Transactional
     public int unfavor(long id, long userId) {
-        Forum forum = forumMapper.selectById(id);
-        if (forum == null) return -1;
+        if (forumMapper.selectById(id) == null) return -1;
         ForumFavor forumFavor = forumFavorMapper.selectOne(new QueryWrapper<ForumFavor>()
                 .eq("forum_id", id).eq("user_id", userId));
         if (forumFavor == null) {
             return -2;
         } else {
-            if(forumFavorMapper.delete(new QueryWrapper<ForumFavor>()
-                    .eq("forum_id", id).eq("user_id", userId)) == 1){
+            if (forumFavorMapper.delete(new QueryWrapper<ForumFavor>()
+                    .eq("forum_id", id).eq("user_id", userId)) == 1) {
                 forumMapper.updateFavorCount(id, -1);
                 return 1;
-            }else{
+            } else {
                 return 0;
             }
         }
     }
 
     public boolean isFavor(long userId, long id) {
-        ForumFavor forumFavor = forumFavorMapper.selectOne(new QueryWrapper<ForumFavor>()
-                .eq("forum_id", id).eq("user_id", userId));
-        return forumFavor != null;
+        return forumFavorMapper.selectOne(new QueryWrapper<ForumFavor>()
+                .eq("forum_id", id).eq("user_id", userId)) != null;
     }
 }
