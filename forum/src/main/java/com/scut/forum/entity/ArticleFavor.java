@@ -10,11 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("forum")
-public class Forum {
+@TableName("article_favor")
+public class ArticleFavor {
     @TableId(type = IdType.AUTO)
     private Long id;
-    private Long gameId;
-    private Long favorCount;
-    private Long articleCount;
+    private Long userId;
+    private Long articleId;
 }

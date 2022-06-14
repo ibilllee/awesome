@@ -9,10 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ArticleCommentDto {
     private long id;
-    private String userId;
-    private String articleId;
+    private long userId;
+    private long articleId;
     private String content;
     private long replyId;
     private long replyCount;
     private long createTime;
+
+    public ArticleCommentDto(long id) {
+        this.id = id;
+    }
 }

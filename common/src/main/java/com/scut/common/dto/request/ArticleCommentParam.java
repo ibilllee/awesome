@@ -15,6 +15,6 @@ public class ArticleCommentParam {
     private long articleId;
     @ApiModelProperty(value = "评论内容", required = true)
     private String content;
-    @ApiModelProperty(value = "回复评论ID", required = true)
-    private long replyId;
+    @ApiModelProperty(value = "二级消息回复评论ID，一级消息不传")
+    private Long replyId;
 }

@@ -15,7 +15,7 @@ class ForumMapperTest {
 
     @Test
     public void test(){
-        Forum forum = new Forum(0, 1, 0, 0);
+        Forum forum = new Forum(0L, 1L, 0L, 0L);
         forumMapper.insert(forum);
     }
 

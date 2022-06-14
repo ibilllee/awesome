@@ -1,4 +1,4 @@
-package com.scut.forum.entity;
+package com.scut.board.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("forum")
-public class Forum {
+@TableName("game")
+public class SearchGameList {
     @TableId(type = IdType.AUTO)
-    private Long id;
-    private Long gameId;
-    private Long favorCount;
-    private Long articleCount;
+    long id; //游戏id
+    long score; // 游戏评分
+    String name; //游戏名称
+    String classify; //游戏分类
 }
