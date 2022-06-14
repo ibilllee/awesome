@@ -22,6 +22,7 @@ public class ViewBoardController {
     @Resource
     private ViewBoardService viewBoardService;
 
+
     @GetMapping("/getHottest")
     @ApiOperation(value = "/getHottest", notes = "最热排行榜")
     public MultiResponse<GameForBoardDto> getHottest() {
