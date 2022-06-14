@@ -37,7 +37,7 @@ public class GameController {
             gameDetailsDto = gameService.getGameDetails(id);
             return gameDetailsDtoSingleResponse.success(gameDetailsDto);
         } catch (Exception e) {
-            return gameDetailsDtoSingleResponse.error(gameDetailsDto, 3001, "游戏ID不存在");
+            return gameDetailsDtoSingleResponse.error(null, 3001, "游戏ID不存在");
         }
     }
 
@@ -58,7 +58,7 @@ public class GameController {
             if (downloadUrl.isEmpty()) return stringSingleResponse.error(downloadUrl, 3002, "游戏的下载地址不存在");
             else return stringSingleResponse.success(downloadUrl);
         } catch (Exception e) {
-            return stringSingleResponse.error(downloadUrl, 3001, "游戏ID不存在");
+            return stringSingleResponse.error(null, 3001, "游戏ID不存在");
         }
     }
 }

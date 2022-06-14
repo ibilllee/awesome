@@ -3,30 +3,30 @@ package com.scut.board.service;
 import com.scut.board.entity.GameForBoard;
 import com.scut.board.mapper.ViewBoardMapper;
 import com.scut.common.dto.response.GameForBoardDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
+import javax.annotation.Resource;
+import java.util.*;
 
 @Service
 public class ViewBoardServiceImpl implements ViewBoardService {
 
-    @Autowired
+    @Resource
     private ViewBoardMapper viewBoardMapper;
 
-    @Override
     public Float getScoreForOneDecimalPlace(float score) {
         int scoreInt = (int) (score * 10);
-        float newScore = scoreInt / 10;
+        float newScore = (float) (scoreInt / 10.0);
         return newScore;
     }
 
-    @Override
-    public Collection<GameForBoardDto> getViewBoardDataByTime() {
+    @Transactional
+    public List<GameForBoardDto> getViewBoardDataByTime() {
 
-        Collection<GameForBoard> gameInfoCollectionByTime;
+        List<GameForBoard> gameInfoCollectionByTime;
         try {
-            gameInfoCollectionByTime = viewBoardMapper.getGameInfoByTime();
+            gameInfoCollectionByTime = viewBoardMapper.selectGameInfoByTime();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -34,12 +34,11 @@ public class ViewBoardServiceImpl implements ViewBoardService {
         return getGameForBoardDto(gameInfoCollectionByTime);
     }
 
-    @Override
-    public Collection<GameForBoardDto> getViewBoardDataByScore() {
+    public List<GameForBoardDto> getViewBoardDataByScore() {
 
-        Collection<GameForBoard> gameInfoCollectionByScore;
+        List<GameForBoard> gameInfoCollectionByScore;
         try {
-            gameInfoCollectionByScore = viewBoardMapper.getGameInfoByScore();
+            gameInfoCollectionByScore = viewBoardMapper.selectGameInfoByScore();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -47,21 +46,11 @@ public class ViewBoardServiceImpl implements ViewBoardService {
         return getGameForBoardDto(gameInfoCollectionByScore);
     }
 
-    private Collection<GameForBoardDto> getGameForBoardDto(Collection<GameForBoard> gameInfoCollection) {
-
-        GameForBoard[] gameInfoList = (GameForBoard[]) gameInfoCollection.toArray();
-        Collection<GameForBoardDto> dataList = null;
-        for (int i = 0; i < gameInfoList.length; i++) {
-            GameForBoardDto data = new GameForBoardDto();
-            GameForBoard gameInfo = gameInfoList[i];
-            data.setId(gameInfo.getId());
-            data.setName(gameInfo.getName());
-            data.setCover(gameInfo.getCover());
-            data.setLogo(gameInfo.getLogo());
-            data.setClassify(gameInfo.getClassify());
-            float score = getScoreForOneDecimalPlace(gameInfo.getScore());
-            data.setScore(score);
-            data.setRank(i+1);
+    public List<GameForBoardDto> getGameForBoardDto(List<GameForBoard> gameInfoList) {
+        List<GameForBoardDto> dataList = new ArrayList<>();
+        for (int i = 0; i < gameInfoList.size(); i++) {
+            GameForBoard gameInfo = gameInfoList.get(i);
+            GameForBoardDto data = new GameForBoardDto(gameInfo.getId(), (long) i + 1, gameInfo.getName(), gameInfo.getCover(), gameInfo.getLogo(), gameInfo.getClassify(), getScoreForOneDecimalPlace(gameInfo.getScore()));
             dataList.add(data);
         }
         return dataList;

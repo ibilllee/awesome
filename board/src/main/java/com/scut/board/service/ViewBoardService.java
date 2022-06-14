@@ -1,14 +1,17 @@
 package com.scut.board.service;
 
+import com.scut.board.entity.GameForBoard;
 import com.scut.common.dto.response.GameForBoardDto;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ViewBoardService {
 
     Float getScoreForOneDecimalPlace(float score);
 
-    Collection<GameForBoardDto> getViewBoardDataByTime();
+    List<GameForBoardDto> getViewBoardDataByTime();
 
-    Collection<GameForBoardDto> getViewBoardDataByScore();
+    List<GameForBoardDto> getViewBoardDataByScore();
+
+    List<GameForBoardDto> getGameForBoardDto(List<GameForBoard> gameInfoCollection);
 }
