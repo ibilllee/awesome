@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "提交论坛参数")
 public class ForumParam {
     @ApiModelProperty(value = "对应游戏ID", required = true)
-    private String gameId;
+    private long gameId;
 }
