@@ -7,4 +7,5 @@ public class HttpConstant {
     public static final int ARG_INVALID = -1;
     public static final int VERIFY_INVALID = -2;
     public static final int UNKNOWN = -2;
+    public static final String USER_ID_HEADER = "_USER_ID";
 }

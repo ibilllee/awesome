@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(description = "获得论坛列表参数")
 public class ForumListParam {
-    @ApiModelProperty(value = "第几页", required = true)
-    private int page;
-    @ApiModelProperty(value = "页大小", required = true)
-    private int size;
+    @ApiModelProperty(value = "第几页")
+    private Integer page = 0;
+    @ApiModelProperty(value = "页大小")
+    private Integer size = 0;
     @ApiModelProperty(value = "搜索关键字")
     private String searchText;
 }
