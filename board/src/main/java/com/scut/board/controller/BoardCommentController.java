@@ -30,7 +30,7 @@ public class BoardCommentController {
 
     @GetMapping("/get")
     @ApiOperation(value = "/get", notes = "显示评论")
-    public MultiResponse<BoardCommentDto> getComment(@RequestParam int id) {
+    public MultiResponse<BoardCommentDto> getComment(int id) {
         return null;
     }
 }

@@ -1,4 +1,4 @@
-package com.scut.board.config;
+package com.scut.user.config;
 
 import feign.Logger;
 import org.springframework.context.annotation.Bean;

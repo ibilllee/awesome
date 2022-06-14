@@ -1,4 +1,4 @@
-package com.scut.common.response;
+package com.scut.common.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseResponse {
-    int code;
-    String msg;
+public class DeleteFileParam {
+    private String fileName;
 }

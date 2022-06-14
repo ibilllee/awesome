@@ -1,4 +1,4 @@
-package gateway.filter;
+package com.scut.gateway.filter;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
