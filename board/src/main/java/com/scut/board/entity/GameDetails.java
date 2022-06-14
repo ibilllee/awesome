@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @TableName("game")
 public class GameDetails {
     @TableId(type = IdType.AUTO)
-    long id; //游戏id
+    Long id; //游戏id
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,11 +47,11 @@ public class GameDetails {
         this.logo = logo;
     }
 
-    public long getIssuedTime() {
+    public Long getIssuedTime() {
         return issuedTime;
     }
 
-    public void setIssuedTime(long issuedTime) {
+    public void setIssuedTime(Long issuedTime) {
         this.issuedTime = issuedTime;
     }
 
@@ -79,11 +79,11 @@ public class GameDetails {
         this.score = score;
     }
 
-    public long getScoreCount() {
+    public Long getScoreCount() {
         return scoreCount;
     }
 
-    public void setScoreCount(long scoreCount) {
+    public void setScoreCount(Long scoreCount) {
         this.scoreCount = scoreCount;
     }
 
@@ -106,11 +106,11 @@ public class GameDetails {
     String name; //游戏名称
     String cover; //封面地址
     String logo; //logo地址
-    long issuedTime; //游戏上架时间
+    Long issuedTime; //游戏上架时间
     String downloadLink; //下载链接
     String classify; //分类
     float score; //评分
-    long scoreCount; //评分数量
+    Long scoreCount; //评分数量
     String totalScore; //评分总和
     String description; //简要描述
 }

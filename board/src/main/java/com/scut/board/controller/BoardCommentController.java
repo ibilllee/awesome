@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class BoardCommentController {
     @PostMapping("/submit")
     @ApiOperation(value = "/submit", notes = "添加评论")
-    public SingleResponse<BoardCommentDto> addComment(@RequestBody BoardCommentParam comment) {
+    public SingleResponse<BoardCommentDto> addComment(@RequestBody BoardCommentParam comment,
+                                                      @RequestHeader("_USER_ID")long id) {
         return null;
     }
 
     @DeleteMapping("/remove")
     @ApiOperation(value = "/remove", notes = "删除评论")
-    public SingleResponse<Integer> removeComment(@RequestBody IdParam id) {
+    public SingleResponse<Boolean> removeComment(@RequestBody IdParam id) {
         return null;
     }
 

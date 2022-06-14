@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName("game")
 public class GameForBoard {
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -37,7 +37,7 @@ public class GameForBoard {
     }
 
     @TableId(type = IdType.AUTO)
-    long id; //游戏id
+    Long id; //游戏id
     String name; //游戏名称
     String cover; //封面地址
     String logo; //logo地址
