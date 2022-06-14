@@ -11,17 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("game")
-public class GameDetails {
+public class SearchGameList {
     @TableId(type = IdType.AUTO)
-    Long id; //游戏id
+    long id; //游戏id
+    long score; // 游戏评分
     String name; //游戏名称
-    String cover; //封面地址
-    String logo; //logo地址
-    Long issuedTime; //游戏上架时间
-    String downloadLink; //下载链接
-    String classify; //分类
-    float score; //评分
-    Long scoreCount; //评分数量
-    String totalScore; //评分总和
-    String description; //简要描述
+    String classify; //游戏分类
 }

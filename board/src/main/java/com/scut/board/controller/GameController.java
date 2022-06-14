@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
+import java.util.List;
 
 @RequestMapping("/game")
 @RestController
-@Api(value = "game")
+@Api(value = "game", description = "游戏相关")
 @Slf4j
 public class GameController {
 
@@ -32,33 +32,29 @@ public class GameController {
     @GetMapping("/get")
     @ApiOperation(value = "/get", notes = "游戏详情")
     public SingleResponse<GameDetailsDto> getGameDetails(@RequestParam long id) {
-        GameDetailsDto gameDetailsDto = null;
-        try {
-            gameDetailsDto = gameService.getGameDetails(id);
-            return gameDetailsDtoSingleResponse.success(gameDetailsDto);
-        } catch (Exception e) {
-            return gameDetailsDtoSingleResponse.error(null, 3001, "游戏ID不存在");
-        }
+        GameDetailsDto gameDetailsDto;
+        gameDetailsDto = gameService.getGameDetails(id);
+        if (gameDetailsDto!=null) return new SingleResponse<GameDetailsDto>().success(gameDetailsDto);
+        else
+            return new SingleResponse<GameDetailsDto>().error(null, 3001, "游戏ID不存在");
     }
 
     @GetMapping("/search")
     @ApiOperation(value = "/search", notes = "搜索游戏")
     public MultiResponse<SearchGameListDto> searchGame(@RequestParam String name) {
-        Collection<SearchGameListDto> searchGameListDtoCollection = null;
-        searchGameListDtoCollection = gameService.getGameListBySearch(name);
-        return searchGameListDtoMultiResponse.success(searchGameListDtoCollection);
+        List<SearchGameListDto> searchGameListDtoList;
+        searchGameListDtoList = gameService.getGameListBySearch(name);
+        return new MultiResponse<SearchGameListDto>().success(searchGameListDtoList);
     }
 
     @GetMapping("/download")
     @ApiOperation(value = "/download", notes = "下载游戏")
     public SingleResponse<String> downloadGame(@RequestParam long id) {
-        String downloadUrl = null;
-        try {
-            downloadUrl = gameService.getGameUrl(id);
-            if (downloadUrl.isEmpty()) return stringSingleResponse.error(downloadUrl, 3002, "游戏的下载地址不存在");
-            else return stringSingleResponse.success(downloadUrl);
-        } catch (Exception e) {
-            return stringSingleResponse.error(null, 3001, "游戏ID不存在");
-        }
+        String downloadUrl;
+        downloadUrl = gameService.getGameUrl(id);
+        if (downloadUrl != null) {
+            if (downloadUrl.isEmpty()) return new SingleResponse<String>().error(null, 3002, "游戏的下载地址不存在");
+            else return new SingleResponse<String>().success(downloadUrl);
+        } else return new SingleResponse<String>().error(null, 3001, "游戏的ID不存在");
     }
 }
