@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
-
 import static com.scut.common.constant.HttpConstant.*;
-import static com.scut.common.constant.HttpConstant.UNKNOWN;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
