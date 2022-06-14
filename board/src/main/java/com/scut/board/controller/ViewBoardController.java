@@ -28,24 +28,16 @@ public class ViewBoardController {
     @ApiOperation(value = "/getHottest", notes = "最热排行榜")
     public MultiResponse<GameForBoardDto> getHottest() {
         Collection<GameForBoardDto> gameForBoardDtoCollection = null;
-        try {
-            gameForBoardDtoCollection = viewBoardService.getViewBoardDataByScore();
-            return gameForBoardDtoMultiResponse.ok(gameForBoardDtoCollection);
-        } catch (Exception e) {
-            return gameForBoardDtoMultiResponse.unprocessable(gameForBoardDtoCollection, "3001");
-        }
+        gameForBoardDtoCollection = viewBoardService.getViewBoardDataByScore();
+        return gameForBoardDtoMultiResponse.success(gameForBoardDtoCollection);
     }
 
     @GetMapping("/getLatest")
     @ApiOperation(value = "/getLatest", notes = "最新排行榜")
     public MultiResponse<GameForBoardDto> getLatest() {
         Collection<GameForBoardDto> gameForBoardDtoCollection = null;
-        try {
-            gameForBoardDtoCollection = viewBoardService.getViewBoardDataByTime();
-            return gameForBoardDtoMultiResponse.ok(gameForBoardDtoCollection);
-        } catch (Exception e) {
-            return gameForBoardDtoMultiResponse.unprocessable(gameForBoardDtoCollection, "3001");
-        }
+        gameForBoardDtoCollection = viewBoardService.getViewBoardDataByTime();
+        return gameForBoardDtoMultiResponse.success(gameForBoardDtoCollection);
     }
 
 }

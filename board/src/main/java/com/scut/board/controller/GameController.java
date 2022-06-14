@@ -32,12 +32,12 @@ public class GameController {
     @GetMapping("/get")
     @ApiOperation(value = "/get", notes = "游戏详情")
     public SingleResponse<GameDetailsDto> getGameDetails(@RequestParam long id) {
-       GameDetailsDto gameDetailsDto = null;
+        GameDetailsDto gameDetailsDto = null;
         try {
             gameDetailsDto = gameService.getGameDetails(id);
-            return gameDetailsDtoSingleResponse.ok(gameDetailsDto);
+            return gameDetailsDtoSingleResponse.success(gameDetailsDto);
         } catch (Exception e) {
-            return gameDetailsDtoSingleResponse.unprocessable(gameDetailsDto, "3001");
+            return gameDetailsDtoSingleResponse.error(gameDetailsDto, 3001, "游戏ID不存在");
         }
     }
 
@@ -46,7 +46,7 @@ public class GameController {
     public MultiResponse<SearchGameListDto> searchGame(@RequestParam String name) {
         Collection<SearchGameListDto> searchGameListDtoCollection = null;
         searchGameListDtoCollection = gameService.getGameListBySearch(name);
-        return searchGameListDtoMultiResponse.ok(searchGameListDtoCollection);
+        return searchGameListDtoMultiResponse.success(searchGameListDtoCollection);
     }
 
     @GetMapping("/download")
@@ -55,10 +55,10 @@ public class GameController {
         String downloadUrl = null;
         try {
             downloadUrl = gameService.getGameUrl(id);
-            if (downloadUrl.isEmpty()) return stringSingleResponse.unprocessable(downloadUrl,"3002");
-            else return stringSingleResponse.ok(downloadUrl);
+            if (downloadUrl.isEmpty()) return stringSingleResponse.error(downloadUrl, 3002, "游戏的下载地址不存在");
+            else return stringSingleResponse.success(downloadUrl);
         } catch (Exception e) {
-            return stringSingleResponse.unprocessable(downloadUrl, "3001");
+            return stringSingleResponse.error(downloadUrl, 3001, "游戏ID不存在");
         }
     }
 }
