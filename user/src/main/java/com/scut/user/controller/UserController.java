@@ -68,8 +68,8 @@ public class UserController {
         return null;
     }
 
-    @PostMapping("/retrieve")
-    @ApiOperation(value = "/retrieve", notes = "找回密码")
+    @PostMapping("/retrieve/password")
+    @ApiOperation(value = "/retrieve/password", notes = "找回密码")
     public SingleResponse<String> retrievePassword() {
         //客户端在点击“找回密码”后发送的请求
         //1、生成验证码：A，token:B
@@ -79,8 +79,8 @@ public class UserController {
         return null;
     }
 
-    @PostMapping("/verify")
-    @ApiOperation(value = "/verify", notes = "判断验证码是否正确")
+    @PostMapping("/verify/password")
+    @ApiOperation(value = "/verify/password", notes = "判断验证码是否正确")
     public SingleResponse<String> verifyCorrectness(@RequestBody VerificationCodeParam verificationCodeParam) {
         /*
          * 客户端在点击“找回密码”后进入新的界面
