@@ -1,6 +1,6 @@
 package com.scut.board.mapper;
 
-import com.scut.board.entity.GameForBoardEntity;
+import com.scut.board.entity.GameForBoard;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -9,7 +9,7 @@ import java.util.Collection;
 public class ViewBoardMapperImpl implements ViewBoardMapper {
 
     @Override
-    public Collection<GameForBoardEntity> getGameInfoByScore() {
+    public Collection<GameForBoard> getGameInfoByScore() {
         //按照分数顺序读sql
         String sql = "";
 
@@ -17,7 +17,7 @@ public class ViewBoardMapperImpl implements ViewBoardMapper {
     }
 
     @Override
-    public Collection<GameForBoardEntity> getGameInfoByTime() {
+    public Collection<GameForBoard> getGameInfoByTime() {
         //按照时间顺序读sql
         String sql = "";
         return null;

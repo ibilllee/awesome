@@ -1,11 +1,11 @@
 package com.scut.board.mapper;
 
-import com.scut.board.entity.GameForBoardEntity;
+import com.scut.board.entity.GameForBoard;
 
 import java.util.Collection;
 
 public interface ViewBoardMapper {
-    Collection<GameForBoardEntity> getGameInfoByScore();
+    Collection<GameForBoard> getGameInfoByScore();
 
-    Collection<GameForBoardEntity> getGameInfoByTime();
+    Collection<GameForBoard> getGameInfoByTime();
 }

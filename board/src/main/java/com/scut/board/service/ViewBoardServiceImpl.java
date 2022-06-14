@@ -1,6 +1,6 @@
 package com.scut.board.service;
 
-import com.scut.board.entity.GameForBoardEntity;
+import com.scut.board.entity.GameForBoard;
 import com.scut.board.mapper.ViewBoardMapper;
 import com.scut.common.dto.response.GameForBoardDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class ViewBoardServiceImpl implements ViewBoardService {
     @Override
     public Collection<GameForBoardDto> getViewBoardDataByTime() {
 
-        Collection<GameForBoardEntity> gameInfoCollectionByTime;
+        Collection<GameForBoard> gameInfoCollectionByTime;
         try {
             gameInfoCollectionByTime = viewBoardMapper.getGameInfoByTime();
         } catch (Exception e) {
@@ -37,7 +37,7 @@ public class ViewBoardServiceImpl implements ViewBoardService {
     @Override
     public Collection<GameForBoardDto> getViewBoardDataByScore() {
 
-        Collection<GameForBoardEntity> gameInfoCollectionByScore;
+        Collection<GameForBoard> gameInfoCollectionByScore;
         try {
             gameInfoCollectionByScore = viewBoardMapper.getGameInfoByScore();
         } catch (Exception e) {
@@ -47,13 +47,13 @@ public class ViewBoardServiceImpl implements ViewBoardService {
         return getGameForBoardDto(gameInfoCollectionByScore);
     }
 
-    private Collection<GameForBoardDto> getGameForBoardDto(Collection<GameForBoardEntity> gameInfoCollection) {
+    private Collection<GameForBoardDto> getGameForBoardDto(Collection<GameForBoard> gameInfoCollection) {
 
-        GameForBoardEntity[] gameInfoList = (GameForBoardEntity[]) gameInfoCollection.toArray();
+        GameForBoard[] gameInfoList = (GameForBoard[]) gameInfoCollection.toArray();
         Collection<GameForBoardDto> dataList = null;
         for (int i = 0; i < gameInfoList.length; i++) {
             GameForBoardDto data = new GameForBoardDto();
-            GameForBoardEntity gameInfo = gameInfoList[i];
+            GameForBoard gameInfo = gameInfoList[i];
             data.setId(gameInfo.getId());
             data.setName(gameInfo.getName());
             data.setCover(gameInfo.getCover());
@@ -61,6 +61,7 @@ public class ViewBoardServiceImpl implements ViewBoardService {
             data.setClassify(gameInfo.getClassify());
             float score = getScoreForOneDecimalPlace(gameInfo.getScore());
             data.setScore(score);
+            data.setRank(i+1);
             dataList.add(data);
         }
         return dataList;

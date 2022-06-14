@@ -1,6 +1,17 @@
 package com.scut.board.entity;
 
-public class GameForBoardEntity {
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("game")
+public class GameForBoard {
     public long getId() {
         return id;
     }
@@ -25,30 +36,7 @@ public class GameForBoardEntity {
         return score;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
-
-    public void setClassify(String classify) {
-        this.classify = classify;
-    }
-
-    public void setScore(float score) {
-        this.score = score;
-    }
-
+    @TableId(type = IdType.AUTO)
     long id; //游戏id
     String name; //游戏名称
     String cover; //封面地址

@@ -22,30 +22,29 @@ public class ViewBoardController {
     @Autowired
     private ViewBoardService viewBoardService;
 
-    private MultiResponse<GameForBoardDto> multiResponse;
-
+    private MultiResponse<GameForBoardDto> gameForBoardDtoMultiResponse;
 
     @GetMapping("/getHottest")
     @ApiOperation(value = "/getHottest", notes = "最热排行榜")
     public MultiResponse<GameForBoardDto> getHottest() {
-        Collection<GameForBoardDto> collection = null;
+        Collection<GameForBoardDto> gameForBoardDtoCollection = null;
         try {
-            collection = viewBoardService.getViewBoardDataByScore();
-            return multiResponse.ok(collection);
+            gameForBoardDtoCollection = viewBoardService.getViewBoardDataByScore();
+            return gameForBoardDtoMultiResponse.ok(gameForBoardDtoCollection);
         } catch (Exception e) {
-            return multiResponse.unprocessable(collection, "3001");
+            return gameForBoardDtoMultiResponse.unprocessable(gameForBoardDtoCollection, "3001");
         }
     }
 
     @GetMapping("/getLatest")
     @ApiOperation(value = "/getLatest", notes = "最新排行榜")
     public MultiResponse<GameForBoardDto> getLatest() {
-        Collection<GameForBoardDto> collection = null;
+        Collection<GameForBoardDto> gameForBoardDtoCollection = null;
         try {
-            collection = viewBoardService.getViewBoardDataByTime();
-            return multiResponse.ok(collection);
+            gameForBoardDtoCollection = viewBoardService.getViewBoardDataByTime();
+            return gameForBoardDtoMultiResponse.ok(gameForBoardDtoCollection);
         } catch (Exception e) {
-            return multiResponse.unprocessable(collection, "3001");
+            return gameForBoardDtoMultiResponse.unprocessable(gameForBoardDtoCollection, "3001");
         }
     }
 
