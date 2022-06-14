@@ -7,17 +7,14 @@ import com.scut.common.dto.request.IdParam;
 import com.scut.common.dto.response.ForumDto;
 import com.scut.common.dto.response.ForumTagDto;
 import com.scut.common.response.MultiResponse;
-import com.scut.common.response.PageResponse;
 import com.scut.common.response.SingleResponse;
 import com.scut.forum.service.ForumService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 import static com.scut.common.constant.HttpConstant.USER_ID_HEADER;
 
@@ -55,11 +52,11 @@ public class ForumController {
         return new MultiResponse<ForumDto>().success(result);
     }
 
-    @GetMapping("/myList")
-    @ApiOperation(value = "/myList", notes = "获取我收藏的论坛列表")
-    public MultiResponse<ForumDto> myList(ForumListParam forumListParam,
-                                          @RequestHeader(USER_ID_HEADER) long userId) {
-        List<ForumDto> result = forumService.getMyList(forumListParam, userId);
+    @GetMapping("/favor/list")
+    @ApiOperation(value = "/favor/list", notes = "获取我收藏的论坛列表")
+    public MultiResponse<ForumDto> favorList(ForumListParam forumListParam,
+                                             @RequestHeader(USER_ID_HEADER) long userId) {
+        List<ForumDto> result = forumService.getFavorList(forumListParam, userId);
         if (result == null)
             return new MultiResponse<ForumDto>().unknown(null, "未知错误");
         return new MultiResponse<ForumDto>().success(result);
