@@ -30,12 +30,16 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "/login",notes = "登录")
-    public SingleResponse<TokenDto> login(@RequestBody RegisterAndLoginParam loginParam){
+    public SingleResponse<TokenDto> login(@RequestBody RegisterAndLoginParam loginParam) throws Exception {
         //返回结果是调用ok()的返回值，TokenDto为返回给前端的token串
         TokenDto tokenDto = userService.login(loginParam);
-        if (tokenDto == null){
-            return new SingleResponse<TokenDto>().unknown(null,"未知错误");
-        }
+        int result = tokenDto.getResult();
+        if (result == 2)
+            return new SingleResponse<TokenDto>().error(null, 1008, "登录邮箱或密码格式错误");
+        else if (result == 3)
+            return new SingleResponse<TokenDto>().error(null, 1009, "邮箱未注册");
+        else if (result == 4)
+            return new SingleResponse<TokenDto>().error(null, 1004,"登录密码错误");
         return new SingleResponse<TokenDto>().success(tokenDto);
     }
 

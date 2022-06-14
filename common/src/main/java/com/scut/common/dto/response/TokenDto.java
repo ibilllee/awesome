@@ -15,4 +15,5 @@ public class TokenDto {
     String avatar;
     String cover;
     String introduce;
+    int result;
 }
