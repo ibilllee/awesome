@@ -15,5 +15,5 @@ public class GameForBoardDto {
     String cover; //封面地址
     String logo; //logo地址
     String classify; //游戏分类
-    long score; //评分
+    float score; //评分
 }
