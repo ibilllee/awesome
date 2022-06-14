@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @TableName("user")
 public class User {
     @TableId(type = IdType.AUTO)
-    private long id;
+    private Long id;
     private String email;
     private String username;
     private String password;
     private String avatar;
     private String cover;
     private String introduce;
-    private long createTime;
+    private Long createTime;
 }

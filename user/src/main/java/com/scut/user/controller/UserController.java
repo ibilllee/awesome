@@ -4,16 +4,22 @@ import com.scut.common.dto.request.*;
 import com.scut.common.dto.response.TokenDto;
 import com.scut.common.dto.response.UserDto;
 import com.scut.common.response.SingleResponse;
+import com.scut.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/user")
 @Api(value = "user", description = "用户")
 @Slf4j
 public class UserController {
+
+    @Resource
+    private UserService userService;
 
     @PostMapping("/submit")
     @ApiOperation(value = "/submit",notes = "注册新用户")
@@ -26,7 +32,11 @@ public class UserController {
     @ApiOperation(value = "/login",notes = "登录")
     public SingleResponse<TokenDto> login(@RequestBody RegisterAndLoginParam loginParam){
         //返回结果是调用ok()的返回值，TokenDto为返回给前端的token串
-        return null;
+        TokenDto tokenDto = userService.login(loginParam);
+        if (tokenDto == null){
+            return new SingleResponse<TokenDto>().unknown(null,"未知错误");
+        }
+        return new SingleResponse<TokenDto>().success(tokenDto);
     }
 
     @PostMapping("/logout")
