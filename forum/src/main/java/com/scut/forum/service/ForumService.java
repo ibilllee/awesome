@@ -121,6 +121,7 @@ public class ForumService {
         return forumTagMapper.deleteById(id);
     }
 
+    @Transactional
     public int favor(long id, long userId) {
         Forum forum = forumMapper.selectById(id);
         if (forum == null) return -1;
@@ -128,12 +129,18 @@ public class ForumService {
                 .eq("forum_id", id).eq("user_id", userId));
         if (forumFavor == null) {
             forumFavor = new ForumFavor(0L, userId,id);
-            return forumFavorMapper.insert(forumFavor) == 1 ? 1 : 0;
+            if(forumFavorMapper.insert(forumFavor)==1){
+                forumMapper.updateFavorCount(id, 1);
+                return 1;
+            }else {
+                return 0;
+            }
         } else {
             return -2;
         }
     }
 
+    @Transactional
     public int unfavor(long id, long userId) {
         Forum forum = forumMapper.selectById(id);
         if (forum == null) return -1;
@@ -142,8 +149,13 @@ public class ForumService {
         if (forumFavor == null) {
             return -2;
         } else {
-            return forumFavorMapper.delete(new QueryWrapper<ForumFavor>()
-                    .eq("forum_id", id).eq("user_id", userId)) == 1 ? 1 : 0;
+            if(forumFavorMapper.delete(new QueryWrapper<ForumFavor>()
+                    .eq("forum_id", id).eq("user_id", userId)) == 1){
+                forumMapper.updateFavorCount(id, -1);
+                return 1;
+            }else{
+                return 0;
+            }
         }
     }
 
