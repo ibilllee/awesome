@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.scut.common.dto.request.ArticleParam;
 import com.scut.common.dto.response.ArticleDto;
+import com.scut.common.dto.response.UserAvatarAndUsernameDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,7 +41,7 @@ public class Article {
         attachment = "";
     }
 
-    public ArticleDto getDto() {
+    public ArticleDto getDto(UserAvatarAndUsernameDto dto) {
         return new ArticleDto(getId(),
                 getUserId(),
                 getForumId(),
@@ -52,6 +53,8 @@ public class Article {
                 getUpdateTime(),
                 getTag(),
                 getViewCount(),
-                getAttachment());
+                getAttachment(),
+                dto.getAvatar(),
+                dto.getUsername());
     }
 }

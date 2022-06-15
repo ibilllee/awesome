@@ -13,6 +13,7 @@ import com.scut.common.dto.response.ArticleDto;
 import com.scut.common.dto.response.InformDto;
 import com.scut.forum.entity.Article;
 import com.scut.forum.entity.ArticleComment;
+import com.scut.forum.feign.UserFeignService;
 import com.scut.forum.mapper.ArticleCommentMapper;
 import com.scut.forum.mapper.ArticleMapper;
 import com.scut.forum.util.HotIndexUtil;
@@ -32,6 +33,8 @@ public class ArticleCommentService {
     private ArticleMapper articleMapper;
     @Resource
     private RocketMQTemplate rocketMQTemplate;
+    @Resource
+    private UserFeignService userFeignService;
 
     @Transactional
     public ArticleCommentDto submit(ArticleCommentParam articleCommentParam, long userId) {
@@ -72,7 +75,8 @@ public class ArticleCommentService {
                 rocketMQTemplate.convertAndSend(MQConstant.TOPIC_PUSH_INFORM, JSON.toJSONBytes(informDto));
                 HotIndexUtil.updateArticleHotIndex(article);
             }
-            return articleComment.getDto();
+
+            return articleComment.getDto(userFeignService.getAvatarAndUsername(userId).getData());
         }
         return null;
     }
@@ -81,7 +85,7 @@ public class ArticleCommentService {
         ArticleComment articleComment = articleCommentMapper.selectById(id);
         if (articleComment == null)
             return null;
-        return articleComment.getDto();
+        return articleComment.getDto(userFeignService.getAvatarAndUsername(articleComment.getUserId()).getData());
     }
 
     @Transactional
@@ -106,7 +110,7 @@ public class ArticleCommentService {
         List<ArticleComment> articleComments = page.getRecords();
         List<ArticleCommentDto> articleDtos = new ArrayList<>();
         for (ArticleComment articleComment : articleComments) {
-            articleDtos.add(articleComment.getDto());
+            articleDtos.add(articleComment.getDto(userFeignService.getAvatarAndUsername(articleComment.getUserId()).getData()));
         }
         return articleDtos;
     }
@@ -121,7 +125,7 @@ public class ArticleCommentService {
         List<ArticleComment> articleComments = page.getRecords();
         List<ArticleCommentDto> articleDtos = new ArrayList<>();
         for (ArticleComment articleComment : articleComments) {
-            articleDtos.add(articleComment.getDto());
+            articleDtos.add(articleComment.getDto(userFeignService.getAvatarAndUsername(articleComment.getUserId()).getData()));
         }
         return articleDtos;
     }

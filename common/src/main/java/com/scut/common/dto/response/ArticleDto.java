@@ -21,4 +21,6 @@ public class ArticleDto {
     private String tag;
     private long viewCount;
     private String attachment;
+    private String avatar;
+    private String username;
 }

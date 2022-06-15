@@ -2,6 +2,7 @@ package com.scut.inform.consumer;
 
 import com.alibaba.fastjson.JSON;
 import com.scut.common.constant.MQConstant;
+import com.scut.common.dto.response.EmailDto;
 import com.scut.common.dto.response.InformDto;
 import com.scut.inform.service.InformService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,18 +13,17 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 @Component
-@RocketMQMessageListener(topic = MQConstant.TOPIC_PUSH_INFORM,
-        consumerGroup = "inform_consumer_group")
+@RocketMQMessageListener(topic = MQConstant.TOPIC_EMAIL,
+        consumerGroup = "email_consumer_group")
 @Slf4j
-public class PushInFormConsumer implements RocketMQListener<String> {
+public class EmailConsumer implements RocketMQListener<String> {
     @Resource
     private InformService informService;
 
     @Override
     public void onMessage(String message) {
-        log.info(MQConstant.TOPIC_PUSH_INFORM + " 接到消息:" + message);
-        InformDto informDto = JSON.parseObject(message, InformDto.class);
-        informService.addInformToRedis(informDto);
+        log.info(MQConstant.TOPIC_EMAIL + " 接到消息:" + message);
+        EmailDto emailDto = JSON.parseObject(message, EmailDto.class);
+        informService.sendEmail(emailDto);
     }
 }
-

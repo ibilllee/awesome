@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.scut.common.dto.request.ArticleCommentParam;
 import com.scut.common.dto.response.ArticleCommentDto;
 import com.scut.common.dto.response.ArticleDto;
+import com.scut.common.dto.response.UserAvatarAndUsernameDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,13 +31,15 @@ public class ArticleComment {
         replyId = articleCommentParam.getReplyId();
     }
 
-    public ArticleCommentDto getDto() {
+    public ArticleCommentDto getDto(UserAvatarAndUsernameDto dto) {
         return new ArticleCommentDto(getId(),
                 getUserId(),
                 getArticleId(),
                 getContent(),
                 getReplyId(),
                 getReplyCount(),
-                getCreateTime());
+                getCreateTime(),
+                dto.getAvatar(),
+                dto.getUsername());
     }
 }
