@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(description = "判断验证码的正确性所发送的数据")
 public class VerificationCodeParam {
+    @ApiModelProperty(value = "邮箱", required = true)
+    private String email;
     @ApiModelProperty(value = "密码", required = true)
     private String password;
     @ApiModelProperty(value = "验证码", required = true)
