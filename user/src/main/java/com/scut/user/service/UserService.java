@@ -3,6 +3,7 @@ package com.scut.user.service;
 import com.scut.common.dto.request.CreateTokenParam;
 import com.scut.common.dto.request.RegisterAndLoginParam;
 import com.scut.common.dto.response.UserWithTokenDto;
+import com.scut.common.dto.response.UserAvatarAndUsernameDto;
 import com.scut.common.utils.JwtUtil;
 import com.scut.common.utils.MD5Util;
 import com.scut.common.utils.ValidityCheckUtil;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @Service
@@ -94,4 +96,8 @@ public class UserService {
         return userWithTokenDto;
     }
 
+    public UserAvatarAndUsernameDto getAvatarAndUsername(long id) {
+        Map<Object, String> map = userMapper.selectAvatarAndUsernameById(id);
+        return new UserAvatarAndUsernameDto(map.get("avatar"), map.get("username"));
+    }
 }

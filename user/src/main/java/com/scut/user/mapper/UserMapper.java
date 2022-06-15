@@ -5,6 +5,7 @@ import com.scut.user.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultType;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT email FROM user")
     @ResultType(String.class)
     List<String> selectAllEmail();
+
+    @Select(" SELECT avatar, username FROM user WHERE id = #{id} ")
+    Map<Object, String> selectAvatarAndUsernameById(@Param("id") long id);
 }

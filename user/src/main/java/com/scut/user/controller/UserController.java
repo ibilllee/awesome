@@ -1,6 +1,7 @@
 package com.scut.user.controller;
 
 import com.scut.common.dto.request.*;
+import com.scut.common.dto.response.UserAvatarAndUsernameDto;
 import com.scut.common.dto.response.UserDto;
 import com.scut.common.dto.response.UserWithTokenDto;
 import com.scut.common.response.SingleResponse;
@@ -117,5 +118,14 @@ public class UserController {
         //3、若相等，转发请求到/update/password，返回的String提示用户成功
         //4、若不相等，返回String提示用户验证码错误
         return null;
+    }
+
+    @GetMapping("/get/avatarAndUsername")
+    @ApiOperation(value = "/get/avatarAndUsername", notes = "获取用户相关信息")
+    public SingleResponse<UserAvatarAndUsernameDto> getAvatarAndUsername(long id) {
+        UserAvatarAndUsernameDto dto=userService.getAvatarAndUsername(id);
+        if(dto==null)
+            return new SingleResponse<UserAvatarAndUsernameDto>().unknown(null,"未知错误");
+        return new SingleResponse<UserAvatarAndUsernameDto>().success(dto);
     }
 }
