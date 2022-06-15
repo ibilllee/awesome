@@ -69,9 +69,7 @@ public class UserService {
                 //获得用户输入的密码后，需要将其用Md5进行加密，然后再将其与数据库中的密码进行比较
                 if (MD5Util.verify(loginPassword,user.getPassword())){
                     CreateTokenParam createTokenParam = new CreateTokenParam();
-                    createTokenParam.setEmail(user.getEmail());
                     createTokenParam.setId(user.getId());
-                    createTokenParam.setUsername(user.getUsername());
 
                     String token = JwtUtil.createToken(createTokenParam);
                     userWithTokenDto.setToken(token);

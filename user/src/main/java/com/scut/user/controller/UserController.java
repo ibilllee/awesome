@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import static com.scut.common.constant.HttpConstant.USER_ID_HEADER;
+
 @RestController
 @RequestMapping("/user")
 @Api(value = "user", description = "用户")
@@ -67,7 +69,9 @@ public class UserController {
 
     @PutMapping("/update/username")
     @ApiOperation(value = "/update/username", notes = "更新用户名")
-    public SingleResponse<UserDto> updateUsername(@RequestBody UsernameParam usernameParam) {
+    public SingleResponse<UserDto> updateUsername(@RequestBody UsernameParam usernameParam,
+                                                @RequestHeader(USER_ID_HEADER) Long userId) {
+        System.out.println("网关取到的用户ID为："+userId);
         return null;
     }
 

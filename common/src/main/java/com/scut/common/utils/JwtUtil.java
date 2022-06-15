@@ -17,22 +17,47 @@ public class JwtUtil {
                 .setHeaderParam("typ","JWT")
                 .setHeaderParam("alg","HS256")
                 //payload
-                .claim("username",createTokenParam.getUsername())
-                .claim("email",createTokenParam.getEmail())
+                .claim("_USER_ID",String.valueOf(createTokenParam.getId()))
                 .setExpiration(new Date(System.currentTimeMillis()+time))
-                .setId(String.valueOf(createTokenParam.getId()))
                 //signature
                 .signWith(SignatureAlgorithm.HS256,signature)
                 .compact();
         return jwtToken;
     }
-    public void parse(String token){
-        JwtParser jwtParser = Jwts.parser();
-        Jws<Claims> claimsJws = jwtParser.setSigningKey(signature).parseClaimsJws(token);
-        Claims claims = claimsJws.getBody();
-        String username = claims.get("username").toString();
-        String email = claims.get("email").toString();
-        Date expirationTime = claims.getExpiration();
+    public static Claims parse(String token){
+        try{
+            JwtParser jwtParser = Jwts.parser();
+            Jws<Claims> claimsJws = jwtParser.setSigningKey(signature).parseClaimsJws(token);
+            Claims claims = claimsJws.getBody();
+            return claims;
+//        Date expirationTime = claims.getExpiration();
+        }catch (ExpiredJwtException e){
+            throw new RuntimeException("token 已经过期");
+        }catch (Exception e){
+            throw new RuntimeException("token 解析异常");
+        }
+    }
 
+    /**
+     * 是否过期
+     *
+     * @param claims
+     * @return 0：有效，1：失效，token过期  2：失效，解析异常
+     */
+    public static int verifyToken(Claims claims) {
+        if(claims==null){
+            return 2;
+        }
+        try {
+            if(claims.getExpiration().before(new Date(System.currentTimeMillis()))){
+                //token已经过期
+                return 1;
+            }
+        } catch (ExpiredJwtException ex) {
+            return 1;
+        }catch (Exception e){
+            return 2;
+        }
+        return 0;
     }
 }
