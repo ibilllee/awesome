@@ -19,6 +19,6 @@ public class GameDetailsDto {
     String classify; //分类
     float score; //评分
     long scoreCount; //评分数量
-    String totalScore; //评分总和
+    long totalScore; //评分总和
     String description; //简要描述
 }

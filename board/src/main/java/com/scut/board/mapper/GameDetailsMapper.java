@@ -2,10 +2,7 @@ package com.scut.board.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.scut.board.entity.GameDetails;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.ResultType;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface GameDetailsMapper extends BaseMapper<GameDetails> {
@@ -16,4 +13,7 @@ public interface GameDetailsMapper extends BaseMapper<GameDetails> {
     @Select("SElECT * FROM game where id = #{gameId}")
     @ResultType(GameDetails.class)
     GameDetails selectGameDetails(@Param("gameId") long gameId);
+
+    @Update("UPDATE game SET score=#{score},score_count=#{scoreCount},total_score=#{totalScore} where id = #{gameId}")
+    void updateGameScore(@Param("score") float score,@Param("scoreCount") long scoreCount,@Param("totalScore") long totalScore,@Param("gameId") long gameId);
 }

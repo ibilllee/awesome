@@ -20,8 +20,8 @@ public class GameDetails {
     Long issuedTime; //游戏上架时间
     String downloadLink; //下载链接
     String classify; //分类
-    float score; //评分
+    float score; //评分S
     Long scoreCount; //评分数量
-    String totalScore; //评分总和
+    Long totalScore; //评分总和
     String description; //简要描述
 }

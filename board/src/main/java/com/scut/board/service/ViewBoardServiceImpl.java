@@ -4,10 +4,10 @@ import com.scut.board.entity.GameForBoard;
 import com.scut.board.mapper.ViewBoardMapper;
 import com.scut.common.dto.response.GameForBoardDto;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ViewBoardServiceImpl implements ViewBoardService {
@@ -21,7 +21,6 @@ public class ViewBoardServiceImpl implements ViewBoardService {
         return newScore;
     }
 
-    @Transactional
     public List<GameForBoardDto> getViewBoardDataByTime() {
 
         List<GameForBoard> gameInfoCollectionByTime;
