@@ -7,7 +7,7 @@ import javax.xml.crypto.Data;
 import java.util.Date;
 
 public class JwtUtil {
-    private static long time = 1000*60*60*24;//一天的有效时间
+    private static long time = 1000*90;//九十秒的有效时间
     private static String signature = "awesome";
 
     public static String createToken(CreateTokenParam createTokenParam){

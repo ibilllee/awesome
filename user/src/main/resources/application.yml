@@ -15,7 +15,7 @@ spring:
         namespace: public
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.91.73.146/awesome?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://119.91.73.146/awesome?useUnicode=true&characterEncoding=utf8&useAffectedRows=true
     username: root
     password: PublicCode2001!
     redis:
@@ -26,3 +26,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
+rocketmq:
+  name-server: 119.91.73.146:9876
+  producer:
+    group: inform_producer_group

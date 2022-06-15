@@ -22,6 +22,10 @@ public interface UserMapper extends BaseMapper<User> {
     @ResultType(String.class)
     List<String> selectAllEmail();
 
+    @Select("SELECT username FROM user")
+    @ResultType(String.class)
+    List<String> selectAllUsername();
+
     @Select(" SELECT avatar, username FROM user WHERE id = #{id} ")
     Map<Object, String> selectAvatarAndUsernameById(@Param("id") long id);
 }

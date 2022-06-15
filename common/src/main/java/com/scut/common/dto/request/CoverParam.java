@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(description = "提交password参数")
-public class PasswordParam {
-    @ApiModelProperty(value = "旧密码", required = true)
-    private String oldPassword;
-    @ApiModelProperty(value = "新密码", required = true)
-    private String newPassword;
+@ApiModel(description = "提交cover参数")
+public class CoverParam {
+    @ApiModelProperty(value = "用户中心封面地址", required = true)
+    private String cover;
 }
