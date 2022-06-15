@@ -56,12 +56,11 @@ public class GameServiceImpl implements GameService {
         String newKeyWord = getNewKeyWord(Keyword);
         List<SearchGameList> searchGameListList = searchGameListMapper.selectSearchGameList(newKeyWord);
         List<SearchGameListDto> searchGameListDtoList = new ArrayList<>();
-        for (int i = 0; i < searchGameListList.size(); i++) {
-            SearchGameList searchGameList = searchGameListList.get(i);
+        for (SearchGameList searchGameList : searchGameListList) {
             SearchGameListDto searchGameListDto = new SearchGameListDto(searchGameList.getId(),
-                                                                        searchGameList.getScore(),
-                                                                        searchGameList.getName(),
-                                                                        searchGameList.getClassify());
+                    searchGameList.getScore(),
+                    searchGameList.getName(),
+                    searchGameList.getClassify());
             searchGameListDtoList.add(searchGameListDto);
         }
         return searchGameListDtoList;
