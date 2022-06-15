@@ -17,6 +17,13 @@ spring:
     host: 119.91.73.146
     port: 6379
     password: PublicCode2001!
+  mail:
+    host: smtp.qq.com
+    username: ibilllee@qq.com
+    password: kgfeavxwrcqwhhce
+    port: 587
+    default-encoding: UTF-8
+    protocol: smtp
 
 rocketmq:
   name-server: 119.91.73.146:9876
