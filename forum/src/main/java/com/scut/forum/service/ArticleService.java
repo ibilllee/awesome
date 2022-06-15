@@ -13,6 +13,7 @@ import com.scut.common.dto.request.ForumTagParam;
 import com.scut.common.dto.response.ArticleDto;
 import com.scut.common.dto.response.InformDto;
 import com.scut.forum.entity.*;
+import com.scut.forum.feign.UserFeignService;
 import com.scut.forum.mapper.ArticleFavorMapper;
 import com.scut.forum.mapper.ArticleLikeMapper;
 import com.scut.forum.mapper.ArticleMapper;
@@ -52,6 +53,9 @@ public class ArticleService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Resource
+    private UserFeignService userFeignService;
+
     @Transactional
     public ArticleDto submit(ArticleParam articleParam, Long userId) {
         Article article = new Article(articleParam);
@@ -60,7 +64,7 @@ public class ArticleService {
         if (count == 1) {
             forumService.submitTag(new ForumTagParam(article.getForumId(), article.getTag()));
             forumMapper.updateArticleCount(articleParam.getForumId(), 1);
-            return article.getDto();
+            return article.getDto(userFeignService.getAvatarAndUsername(userId).getData());
         }
         HotIndexUtil.updateArticleHotIndex(article);
         return null;
@@ -70,7 +74,7 @@ public class ArticleService {
         Article article = articleMapper.selectById(id);
         if (article == null)
             return null;
-        return article.getDto();
+        return article.getDto(userFeignService.getAvatarAndUsername(article.getUserId()).getData());
     }
 
     public List<ArticleDto> getListByHot(ArticleListParam articleListParam) {
@@ -80,7 +84,7 @@ public class ArticleService {
         List<ArticleDto> result=new ArrayList<>();
         for (Long id : set) {
             Article article = articleMapper.selectById(id);
-            result.add(article.getDto());
+            result.add(article.getDto(userFeignService.getAvatarAndUsername(article.getUserId()).getData()));
             System.out.println(redisTemplate.opsForZSet().score(RedisConstant.REDIS_ZSET_HOT_INDEX,id));
         }
         return result;
@@ -95,7 +99,7 @@ public class ArticleService {
         List<Article> articles = page.getRecords();
         List<ArticleDto> articleDtos = new ArrayList<>();
         for (Article article : articles) {
-            articleDtos.add(article.getDto());
+            articleDtos.add(article.getDto(userFeignService.getAvatarAndUsername(article.getUserId()).getData()));
         }
         return articleDtos;
     }
@@ -109,7 +113,7 @@ public class ArticleService {
         List<Article> articles = page.getRecords();
         List<ArticleDto> articleDtos = new ArrayList<>();
         for (Article article : articles) {
-            articleDtos.add(article.getDto());
+            articleDtos.add(article.getDto(userFeignService.getAvatarAndUsername(article.getUserId()).getData()));
         }
         return articleDtos;
     }
@@ -233,7 +237,7 @@ public class ArticleService {
         List<Article> articles = page.getRecords();
         List<ArticleDto> articleDtos = new ArrayList<>();
         for (Article article : articles) {
-            articleDtos.add(article.getDto());
+            articleDtos.add(article.getDto(userFeignService.getAvatarAndUsername(article.getUserId()).getData()));
         }
         return articleDtos;
     }

@@ -15,6 +15,8 @@ public class ArticleCommentDto {
     private long replyId;
     private long replyCount;
     private long createTime;
+    private String avatar;
+    private String username;
 
     public ArticleCommentDto(long id) {
         this.id = id;
