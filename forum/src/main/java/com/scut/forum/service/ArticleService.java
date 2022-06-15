@@ -1,18 +1,22 @@
 package com.scut.forum.service;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.scut.common.constant.MQConstant;
 import com.scut.common.dto.request.ArticleListForMeParam;
 import com.scut.common.dto.request.ArticleListParam;
 import com.scut.common.dto.request.ArticleParam;
 import com.scut.common.dto.request.ForumTagParam;
 import com.scut.common.dto.response.ArticleDto;
+import com.scut.common.dto.response.InformDto;
 import com.scut.forum.entity.*;
 import com.scut.forum.mapper.ArticleFavorMapper;
 import com.scut.forum.mapper.ArticleLikeMapper;
 import com.scut.forum.mapper.ArticleMapper;
 import com.scut.forum.mapper.ForumMapper;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +40,9 @@ public class ArticleService {
 
     @Resource
     private ForumService forumService;
+
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
 
     @Transactional
     public ArticleDto submit(ArticleParam articleParam, Long userId) {
@@ -94,14 +101,22 @@ public class ArticleService {
 
     @Transactional
     public int favor(long id, long userId) {
-        if (articleMapper.selectById(id) == null) return -1;
+        Article article = articleMapper.selectById(id);
+        if (article == null) return -1;
         ArticleFavor articleFavor = articleFavorMapper.selectOne(new QueryWrapper<ArticleFavor>()
                 .eq("article_id", id).eq("user_id", userId));
         if (articleFavor == null) {
             articleFavor = new ArticleFavor(0L, userId, id);
             if (articleFavorMapper.insert(articleFavor) == 1) {
                 articleMapper.updateFavorCount(id, 1);
-                //TODO 给所属人发消息
+
+                //给文章作者发通知
+                InformDto informDto = new InformDto(
+                        article.getUserId(),
+                        "收藏通知",
+                        "你的文章《" + article.getTitle() + "》有新增收藏");
+                rocketMQTemplate.convertAndSend(MQConstant.TOPIC_PUSH_INFORM, JSON.toJSONBytes(informDto));
+
                 return 1;
             } else {
                 return 0;
@@ -136,14 +151,22 @@ public class ArticleService {
 
     @Transactional
     public int like(long id, long userId) {
-        if (articleMapper.selectById(id) == null) return -1;
+        Article article = articleMapper.selectById(id);
+        if (article == null) return -1;
         ArticleLike articleLike = articleLikeMapper.selectOne(new QueryWrapper<ArticleLike>()
                 .eq("article_id", id).eq("user_id", userId));
         if (articleLike == null) {
             articleLike = new ArticleLike(0L, userId, id);
             if (articleLikeMapper.insert(articleLike) == 1) {
                 articleMapper.updateLikeCount(id, 1);
-                //TODO 给所属人发消息
+
+                //给文章作者发通知
+                InformDto informDto = new InformDto(
+                        article.getUserId(),
+                        "点赞通知",
+                        "你的文章《" + article.getTitle() + "》有新增点赞");
+                rocketMQTemplate.convertAndSend(MQConstant.TOPIC_PUSH_INFORM, JSON.toJSONBytes(informDto));
+
                 return 1;
             } else {
                 return 0;
@@ -189,5 +212,10 @@ public class ArticleService {
             articleDtos.add(article.getDto());
         }
         return articleDtos;
+    }
+
+    public int view(long id) {
+        if (articleMapper.selectById(id) == null) return -1;
+        return articleMapper.updateViewCount(id, 1) == 1 ? 1 : 0;
     }
 }

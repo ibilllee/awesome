@@ -39,6 +39,17 @@ public class ArticleController {
         return new SingleResponse<ArticleDto>().success(articleDto);
     }
 
+    @PostMapping("/view")
+    @ApiOperation(value = "/view", notes = "浏览文章")
+    public SingleResponse<Boolean> view(@RequestBody IdParam idParam) {
+        int result = articleService.view(idParam.getId());
+        if (result == 0)
+            return new SingleResponse<Boolean>().unknown(false, "未知错误");
+        else if (result == -1)
+            return new SingleResponse<Boolean>().error(false, 4007, "文章不存在");
+        return new SingleResponse<Boolean>().success(true);
+    }
+
     @GetMapping("/get")
     @ApiOperation(value = "/get", notes = "获取文章")
     public SingleResponse<ArticleDto> get(long id) {

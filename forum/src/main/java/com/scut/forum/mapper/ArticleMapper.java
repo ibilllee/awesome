@@ -17,4 +17,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     @Update(" UPDATE article SET update_time = #{updateTime} WHERE id = #{id} ")
     void updateUpdateTime(@Param("id") long id, @Param("updateTime") long updateTime);
+
+    @Update(" UPDATE article SET view_count = view_count + #{value} WHERE id = #{id} ")
+    int updateViewCount(@Param("id") long id, @Param("value") int value);
 }

@@ -20,4 +20,5 @@ public class ArticleDto {
     private long updateTime;
     private String tag;
     private long viewCount;
+    private String attachment;
 }
