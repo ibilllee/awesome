@@ -19,6 +19,8 @@ spring:
     username: root
     password: PublicCode2001!
   redis:
+    host: 119.91.73.146
+    port: 6379
     password: PublicCode2001!
 
 mybatis-plus:
