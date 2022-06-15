@@ -13,4 +13,12 @@ spring:
         username: nacos
         password: PublicCode2001!
         namespace: public
+  redis:
+    host: 119.91.73.146
+    port: 6379
+    password: PublicCode2001!
 
+rocketmq:
+  name-server: 119.91.73.146:9876
+  producer:
+    group: inform_producer_group
