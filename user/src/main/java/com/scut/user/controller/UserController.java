@@ -1,8 +1,8 @@
 package com.scut.user.controller;
 
 import com.scut.common.dto.request.*;
-import com.scut.common.dto.response.TokenDto;
 import com.scut.common.dto.response.UserDto;
+import com.scut.common.dto.response.UserWithTokenDto;
 import com.scut.common.response.SingleResponse;
 import com.scut.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+
+import static com.scut.common.constant.HttpConstant.USER_ID_HEADER;
 
 @RestController
 @RequestMapping("/user")
@@ -23,24 +25,31 @@ public class UserController {
 
     @PostMapping("/submit")
     @ApiOperation(value = "/submit",notes = "注册新用户")
-    public SingleResponse<String> submit(@RequestBody RegisterAndLoginParam registerParam){
-        //返回结果是调用ok()的返回值，String为“”，即data为空数据
-        return null;
+    public SingleResponse<String> submit(@RequestBody RegisterAndLoginParam registerParam) throws Exception {
+        int result = userService.register(registerParam);
+        if (result == -1)
+            return new SingleResponse<String>().error(null, 1005, "注册邮箱格式错误");
+        else if (result == -2)
+            return new SingleResponse<String>().error(null, 1002, "注册密码格式错误");
+        else if (result == -3)
+            return new SingleResponse<String>().unknown(null,"未知错误");
+        else if (result == -4)
+            return new SingleResponse<String>().error(null, 1001, "邮箱已被注册");
+        return new SingleResponse<String>().success("注册成功!");
     }
 
     @PostMapping("/login")
     @ApiOperation(value = "/login",notes = "登录")
-    public SingleResponse<TokenDto> login(@RequestBody RegisterAndLoginParam loginParam) throws Exception {
-        //返回结果是调用ok()的返回值，TokenDto为返回给前端的token串
-        TokenDto tokenDto = userService.login(loginParam);
-        int result = tokenDto.getResult();
-        if (result == 2)
-            return new SingleResponse<TokenDto>().error(null, 1008, "登录邮箱或密码格式错误");
-        else if (result == 3)
-            return new SingleResponse<TokenDto>().error(null, 1009, "邮箱未注册");
-        else if (result == 4)
-            return new SingleResponse<TokenDto>().error(null, 1004,"登录密码错误");
-        return new SingleResponse<TokenDto>().success(tokenDto);
+    public SingleResponse<UserWithTokenDto> login(@RequestBody RegisterAndLoginParam loginParam) throws Exception {
+        UserWithTokenDto userWithTokenDto = userService.login(loginParam);
+        long result = userWithTokenDto.getId();
+        if (result == -1)
+            return new SingleResponse<UserWithTokenDto>().error(null, 1008, "登录邮箱或密码格式错误");
+        else if (result == -2)
+            return new SingleResponse<UserWithTokenDto>().error(null, 1009, "登录邮箱未注册");
+        else if (result == -3)
+            return new SingleResponse<UserWithTokenDto>().error(null, 1004,"登录密码错误");
+        return new SingleResponse<UserWithTokenDto>().success(userWithTokenDto);
     }
 
     @PostMapping("/logout")
@@ -60,7 +69,9 @@ public class UserController {
 
     @PutMapping("/update/username")
     @ApiOperation(value = "/update/username", notes = "更新用户名")
-    public SingleResponse<UserDto> updateUsername(@RequestBody UsernameParam usernameParam) {
+    public SingleResponse<UserDto> updateUsername(@RequestBody UsernameParam usernameParam,
+                                                @RequestHeader(USER_ID_HEADER) Long userId) {
+        System.out.println("网关取到的用户ID为："+userId);
         return null;
     }
 

@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 public class CreateTokenParam {
     @ApiModelProperty(value = "用户ID",required = true)
     long id;
-    @ApiModelProperty(value = "邮箱",required = true)
-    String email;
-    @ApiModelProperty(value = "用户名")
-    String username;
+//    @ApiModelProperty(value = "邮箱",required = true)
+//    String email;
+//    @ApiModelProperty(value = "用户名")
+//    String username;
 }
