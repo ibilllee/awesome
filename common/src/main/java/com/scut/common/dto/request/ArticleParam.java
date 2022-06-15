@@ -19,4 +19,6 @@ public class ArticleParam {
     private String content;
     @ApiModelProperty(value = "文章标签", required = true)
     private String tag;
+    @ApiModelProperty(value = "附件 (JSON化后的图片地址等)", required = true)
+    private String attachment;
 }

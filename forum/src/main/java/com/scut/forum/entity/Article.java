@@ -26,9 +26,10 @@ public class Article {
     private Long updateTime;
     private String tag;
     private Long viewCount;
+    private String attachment;
 
     public Article(ArticleParam articleParam) {
-        forumId=articleParam.getForumId();
+        forumId = articleParam.getForumId();
         title = articleParam.getTitle();
         content = articleParam.getContent();
         likeCount = 0L;
@@ -36,6 +37,7 @@ public class Article {
         createTime = updateTime = System.currentTimeMillis();
         tag = articleParam.getTag();
         viewCount = 0L;
+        attachment = "";
     }
 
     public ArticleDto getDto() {
@@ -49,6 +51,7 @@ public class Article {
                 getCreateTime(),
                 getUpdateTime(),
                 getTag(),
-                getViewCount());
+                getViewCount(),
+                getAttachment());
     }
 }

@@ -28,3 +28,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
 
+rocketmq:
+  name-server: 119.91.73.146:9876
+  producer:
+    group: forum_producer_group

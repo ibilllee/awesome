@@ -1,24 +1,33 @@
 package com.scut.forum.service;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.scut.common.constant.MQConstant;
+import com.scut.common.constant.RedisConstant;
 import com.scut.common.dto.request.ArticleListForMeParam;
 import com.scut.common.dto.request.ArticleListParam;
 import com.scut.common.dto.request.ArticleParam;
 import com.scut.common.dto.request.ForumTagParam;
 import com.scut.common.dto.response.ArticleDto;
+import com.scut.common.dto.response.InformDto;
 import com.scut.forum.entity.*;
 import com.scut.forum.mapper.ArticleFavorMapper;
 import com.scut.forum.mapper.ArticleLikeMapper;
 import com.scut.forum.mapper.ArticleMapper;
 import com.scut.forum.mapper.ForumMapper;
+import com.scut.forum.util.HotIndexUtil;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ArticleService {
@@ -37,6 +46,12 @@ public class ArticleService {
     @Resource
     private ForumService forumService;
 
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Transactional
     public ArticleDto submit(ArticleParam articleParam, Long userId) {
         Article article = new Article(articleParam);
@@ -47,6 +62,7 @@ public class ArticleService {
             forumMapper.updateArticleCount(articleParam.getForumId(), 1);
             return article.getDto();
         }
+        HotIndexUtil.updateArticleHotIndex(article);
         return null;
     }
 
@@ -55,6 +71,19 @@ public class ArticleService {
         if (article == null)
             return null;
         return article.getDto();
+    }
+
+    public List<ArticleDto> getListByHot(ArticleListParam articleListParam) {
+        int page = articleListParam.getPage();
+        int size = articleListParam.getSize();
+        Set<Long> set = redisTemplate.opsForZSet().reverseRange(RedisConstant.REDIS_ZSET_HOT_INDEX, (page - 1) * size, page * size - 1);
+        List<ArticleDto> result=new ArrayList<>();
+        for (Long id : set) {
+            Article article = articleMapper.selectById(id);
+            result.add(article.getDto());
+            System.out.println(redisTemplate.opsForZSet().score(RedisConstant.REDIS_ZSET_HOT_INDEX,id));
+        }
+        return result;
     }
 
     public List<ArticleDto> getListByTime(ArticleListParam articleListParam) {
@@ -94,14 +123,23 @@ public class ArticleService {
 
     @Transactional
     public int favor(long id, long userId) {
-        if (articleMapper.selectById(id) == null) return -1;
+        Article article = articleMapper.selectById(id);
+        if (article == null) return -1;
         ArticleFavor articleFavor = articleFavorMapper.selectOne(new QueryWrapper<ArticleFavor>()
                 .eq("article_id", id).eq("user_id", userId));
         if (articleFavor == null) {
             articleFavor = new ArticleFavor(0L, userId, id);
             if (articleFavorMapper.insert(articleFavor) == 1) {
                 articleMapper.updateFavorCount(id, 1);
-                //TODO 给所属人发消息
+
+                //给文章作者发通知
+                InformDto informDto = new InformDto(
+                        article.getUserId(),
+                        "收藏通知",
+                        "你的文章《" + article.getTitle() + "》有新增收藏");
+                rocketMQTemplate.convertAndSend(MQConstant.TOPIC_PUSH_INFORM, JSON.toJSONBytes(informDto));
+                HotIndexUtil.updateArticleHotIndex(article);
+
                 return 1;
             } else {
                 return 0;
@@ -136,14 +174,23 @@ public class ArticleService {
 
     @Transactional
     public int like(long id, long userId) {
-        if (articleMapper.selectById(id) == null) return -1;
+        Article article = articleMapper.selectById(id);
+        if (article == null) return -1;
         ArticleLike articleLike = articleLikeMapper.selectOne(new QueryWrapper<ArticleLike>()
                 .eq("article_id", id).eq("user_id", userId));
         if (articleLike == null) {
             articleLike = new ArticleLike(0L, userId, id);
             if (articleLikeMapper.insert(articleLike) == 1) {
                 articleMapper.updateLikeCount(id, 1);
-                //TODO 给所属人发消息
+
+                //给文章作者发通知
+                InformDto informDto = new InformDto(
+                        article.getUserId(),
+                        "点赞通知",
+                        "你的文章《" + article.getTitle() + "》有新增点赞");
+                rocketMQTemplate.convertAndSend(MQConstant.TOPIC_PUSH_INFORM, JSON.toJSONBytes(informDto));
+                HotIndexUtil.updateArticleHotIndex(article);
+
                 return 1;
             } else {
                 return 0;
@@ -190,4 +237,12 @@ public class ArticleService {
         }
         return articleDtos;
     }
+
+    public int view(long id) {
+        Article article = articleMapper.selectById(id);
+        if (article == null) return -1;
+        HotIndexUtil.updateArticleHotIndex(article);
+        return articleMapper.updateViewCount(id, 1) == 1 ? 1 : 0;
+    }
+
 }

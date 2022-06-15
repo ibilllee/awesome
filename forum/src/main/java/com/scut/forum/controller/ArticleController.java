@@ -39,6 +39,17 @@ public class ArticleController {
         return new SingleResponse<ArticleDto>().success(articleDto);
     }
 
+    @PostMapping("/view")
+    @ApiOperation(value = "/view", notes = "浏览文章")
+    public SingleResponse<Boolean> view(@RequestBody IdParam idParam) {
+        int result = articleService.view(idParam.getId());
+        if (result == 0)
+            return new SingleResponse<Boolean>().unknown(false, "未知错误");
+        else if (result == -1)
+            return new SingleResponse<Boolean>().error(false, 4007, "文章不存在");
+        return new SingleResponse<Boolean>().success(true);
+    }
+
     @GetMapping("/get")
     @ApiOperation(value = "/get", notes = "获取文章")
     public SingleResponse<ArticleDto> get(long id) {
@@ -52,7 +63,10 @@ public class ArticleController {
     @ApiOperation(value = "/list/byHot", notes = "获取文章列表 （按热度）")
     // TODO: 按热度排序
     public MultiResponse<ArticleDto> listByHot(ArticleListParam articleListParam) {
-        return null;
+        List<ArticleDto> result = articleService.getListByHot(articleListParam);
+        if (result == null)
+            return new MultiResponse<ArticleDto>().unknown(null, "未知错误");
+        return new MultiResponse<ArticleDto>().success(result);
     }
 
     @GetMapping("/list/byTime")
