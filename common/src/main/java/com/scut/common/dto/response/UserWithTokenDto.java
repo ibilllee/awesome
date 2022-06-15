@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenDto {
+public class UserWithTokenDto {
     String token;
     long id;
     String email;
@@ -15,5 +15,4 @@ public class TokenDto {
     String avatar;
     String cover;
     String introduce;
-    int result;
 }

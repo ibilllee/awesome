@@ -3,6 +3,8 @@ package com.scut.user.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.scut.common.dto.request.RegisterAndLoginParam;
+import com.scut.common.utils.MD5Util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +23,14 @@ public class User {
     private String cover;
     private String introduce;
     private Long createTime;
+
+    public User(RegisterAndLoginParam registerParam) throws Exception {
+        email = registerParam.getEmail();
+        password = MD5Util.convertMD5(registerParam.getPassword());
+        username = "";
+        avatar = "";
+        cover = "";
+        introduce = "";
+        createTime = System.currentTimeMillis();
+    }
 }

@@ -29,12 +29,12 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
 
         //1. 获取请求
         ServerHttpRequest request = exchange.getRequest();
-        //2. 则获取响应
+        //2. 获取响应
         ServerHttpResponse response = exchange.getResponse();
-//        //3. 如果是登录请求则放行
-//        if (request.getURI().getPath().contains("/admin/login")) {
-//            return chain.filter(exchange);
-//        }
+        //3. 如果是登录请求则放行
+        if (request.getURI().getPath().contains("/user/login")) {
+            return chain.filter(exchange);
+        }
         //4. 获取请求头
         HttpHeaders headers = request.getHeaders();
 //        //5. 请求头中获取令牌
