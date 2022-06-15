@@ -15,6 +15,7 @@ import com.scut.forum.entity.Article;
 import com.scut.forum.entity.ArticleComment;
 import com.scut.forum.mapper.ArticleCommentMapper;
 import com.scut.forum.mapper.ArticleMapper;
+import com.scut.forum.util.HotIndexUtil;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +48,7 @@ public class ArticleCommentService {
 
         Long replyId = articleCommentParam.getReplyId();
         ArticleComment replyComment = articleCommentMapper.selectById(replyId);
-        if (replyId == null)
+        if (replyId == null || articleCommentParam.getReplyId() == -1)
             articleComment.setReplyId(-1L);
         else if (replyComment == null)
             return new ArticleCommentDto(-1);
@@ -57,7 +58,7 @@ public class ArticleCommentService {
         int count = articleCommentMapper.insert(articleComment);
         if (count == 1) {
             articleMapper.updateUpdateTime(articleId, nowTime);//更新文章的最后更新时间
-            if (replyId != null) {//二级评论
+            if (replyId != null && replyId != -1) {//二级评论
                 articleCommentMapper.updateReplyCount(replyId, 1);//更新父评论的回复数
                 InformDto informDto = new InformDto(replyComment.getUserId(),
                         "评论通知",
@@ -69,6 +70,7 @@ public class ArticleCommentService {
                         "评论通知",
                         "你的文章《" + article.getTitle() + "》有新的评论");
                 rocketMQTemplate.convertAndSend(MQConstant.TOPIC_PUSH_INFORM, JSON.toJSONBytes(informDto));
+                HotIndexUtil.updateArticleHotIndex(article);
             }
             return articleComment.getDto();
         }

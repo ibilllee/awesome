@@ -63,7 +63,10 @@ public class ArticleController {
     @ApiOperation(value = "/list/byHot", notes = "获取文章列表 （按热度）")
     // TODO: 按热度排序
     public MultiResponse<ArticleDto> listByHot(ArticleListParam articleListParam) {
-        return null;
+        List<ArticleDto> result = articleService.getListByHot(articleListParam);
+        if (result == null)
+            return new MultiResponse<ArticleDto>().unknown(null, "未知错误");
+        return new MultiResponse<ArticleDto>().success(result);
     }
 
     @GetMapping("/list/byTime")
