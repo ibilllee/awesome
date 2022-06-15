@@ -4,16 +4,22 @@ import com.scut.common.dto.request.*;
 import com.scut.common.dto.response.TokenDto;
 import com.scut.common.dto.response.UserDto;
 import com.scut.common.response.SingleResponse;
+import com.scut.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/user")
 @Api(value = "user", description = "用户")
 @Slf4j
 public class UserController {
+
+    @Resource
+    private UserService userService;
 
     @PostMapping("/submit")
     @ApiOperation(value = "/submit",notes = "注册新用户")
@@ -24,9 +30,17 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "/login",notes = "登录")
-    public SingleResponse<TokenDto> login(@RequestBody RegisterAndLoginParam loginParam){
+    public SingleResponse<TokenDto> login(@RequestBody RegisterAndLoginParam loginParam) throws Exception {
         //返回结果是调用ok()的返回值，TokenDto为返回给前端的token串
-        return null;
+        TokenDto tokenDto = userService.login(loginParam);
+        int result = tokenDto.getResult();
+        if (result == 2)
+            return new SingleResponse<TokenDto>().error(null, 1008, "登录邮箱或密码格式错误");
+        else if (result == 3)
+            return new SingleResponse<TokenDto>().error(null, 1009, "邮箱未注册");
+        else if (result == 4)
+            return new SingleResponse<TokenDto>().error(null, 1004,"登录密码错误");
+        return new SingleResponse<TokenDto>().success(tokenDto);
     }
 
     @PostMapping("/logout")
