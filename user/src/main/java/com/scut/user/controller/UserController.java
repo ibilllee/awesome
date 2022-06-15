@@ -55,43 +55,90 @@ public class UserController {
 
     @PostMapping("/logout")
     @ApiOperation(value = "/logout",notes = "退出登录")
-    public SingleResponse<String> login(){
+    public SingleResponse<String> logout(){
         //参数是@RequestHeader(value="USERNAME")String username
         //返回值String为""
         return null;
     }
 
     @PostMapping("/get/info")
-    @ApiOperation(value = "/get/user", notes = "获取用户相关信息")
-    public SingleResponse<UserDto> getUserInfo() {
-        //参数是@RequestHeader(value="USERNAME")String username
-        return null;
+    @ApiOperation(value = "/get/info", notes = "获取用户相关信息")
+    public SingleResponse<UserDto> getUserInfo(@RequestHeader(USER_ID_HEADER) Long userId) {
+        UserDto userDto = userService.getUserDtoById(userId);
+        if(userDto == null){
+            return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
+        }
+        return new SingleResponse<UserDto>().success(userDto);
     }
 
     @PutMapping("/update/username")
     @ApiOperation(value = "/update/username", notes = "更新用户名")
     public SingleResponse<UserDto> updateUsername(@RequestBody UsernameParam usernameParam,
                                                 @RequestHeader(USER_ID_HEADER) Long userId) {
-        System.out.println("网关取到的用户ID为："+userId);
-        return null;
+        int result = userService.updateUsername(usernameParam.getUsername(), userId);
+        if (result == -1)
+            return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
+        else if (result == 0)
+            return new SingleResponse<UserDto>().unknown(null, "未知错误");
+        else if (result == -2)
+            return new SingleResponse<UserDto>().error(null, 1003, "用户名已重复");
+        UserDto userDto = userService.getUserDtoById(userId);
+        return new SingleResponse<UserDto>().success(userDto);
     }
 
     @PutMapping("/update/introduce")
     @ApiOperation(value = "/update/introduce", notes = "更新个性签名")
-    public SingleResponse<UserDto> updateIntroduce(@RequestBody IntroduceParam introduceParam) {
-        return null;
+    public SingleResponse<UserDto> updateIntroduce(@RequestBody IntroduceParam introduceParam,
+                                                @RequestHeader(USER_ID_HEADER) Long userId) {
+        int result = userService.updateIntroduce(introduceParam.getIntroduce(), userId);
+        if (result == -1)
+            return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
+        else if (result == 0)
+            return new SingleResponse<UserDto>().unknown(null, "未知错误");
+        UserDto userDto = userService.getUserDtoById(userId);
+        return new SingleResponse<UserDto>().success(userDto);
     }
 
     @PutMapping("/update/avatar")
     @ApiOperation(value = "/update/avatar", notes = "更新头像地址")
-    public SingleResponse<UserDto> updateAvatar(@RequestBody AvatarParam avatarParam) {
-        return null;
+    public SingleResponse<UserDto> updateAvatar(@RequestBody AvatarParam avatarParam,
+                                                @RequestHeader(USER_ID_HEADER) Long userId) {
+        int result = userService.updateAvatar(avatarParam.getAvatar(), userId);
+        if (result == -1)
+            return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
+        else if (result == 0)
+            return new SingleResponse<UserDto>().unknown(null, "未知错误");
+        UserDto userDto = userService.getUserDtoById(userId);
+        return new SingleResponse<UserDto>().success(userDto);
     }
 
+    @PutMapping("/update/cover")
+    @ApiOperation(value = "/update/cover", notes = "更新用户中心封面地址")
+    public SingleResponse<UserDto> updateCover(@RequestBody CoverParam coverParam,
+                                                @RequestHeader(USER_ID_HEADER) Long userId) {
+        int result = userService.updateCover(coverParam.getCover(), userId);
+        if (result == -1)
+            return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
+        else if (result == 0)
+            return new SingleResponse<UserDto>().unknown(null, "未知错误");
+        UserDto userDto = userService.getUserDtoById(userId);
+        return new SingleResponse<UserDto>().success(userDto);
+    }
     @PutMapping("/update/password")
     @ApiOperation(value = "/update/password", notes = "修改密码")
-    public SingleResponse<UserDto> updatePassword(@RequestBody PasswordParam passwordParam) {
-        return null;
+    public SingleResponse<UserDto> updatePassword(@RequestBody PasswordParam passwordParam,
+                                                  @RequestHeader(USER_ID_HEADER) Long userId) throws Exception {
+        int result = userService.updatePassword(passwordParam, userId);
+        if (result == -1)
+            return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
+        else if (result == 0)
+            return new SingleResponse<UserDto>().unknown(null, "未知错误");
+        else if (result == -2)
+            return new SingleResponse<UserDto>().error(null, 1010, "旧密码错误");
+        else if (result == -3)
+            return new SingleResponse<UserDto>().error(null, 1006, "新密码格式错误");
+        UserDto userDto = userService.getUserDtoById(userId);
+        return new SingleResponse<UserDto>().success(userDto);
     }
 
     @PostMapping("/retrieve/password")
