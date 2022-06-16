@@ -68,7 +68,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
 
     private Mono<Void> rejectRequest(ServerHttpResponse response) {
         JSONObject message = new JSONObject();
-        message.put("code", "401");
+        message.put("code", "-2");
         message.put("msg", "Unauthorized");
         byte[] bits = message.toJSONString().getBytes(StandardCharsets.UTF_8);
         DataBuffer buffer = response.bufferFactory().wrap(bits);

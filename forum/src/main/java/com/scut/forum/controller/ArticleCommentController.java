@@ -38,7 +38,7 @@ public class ArticleCommentController {
             return new SingleResponse<ArticleCommentDto>().error(null, 4015, "回复的评论不存在");
         else if (articleCommentDto.getId() == -2)
             return new SingleResponse<ArticleCommentDto>().error(null, 4018, "回复的文章不存在");
-         else if (articleCommentDto.getId() == -3)
+        else if (articleCommentDto.getId() == -3)
             return new SingleResponse<ArticleCommentDto>().error(null, 4019, "评论不可回复");
 
         return new SingleResponse<ArticleCommentDto>().success(articleCommentDto);
@@ -64,7 +64,7 @@ public class ArticleCommentController {
     }
 
     @GetMapping("/list/{articleId}/{parentId}")
-    @ApiOperation(value = "/list/{parentId}", notes = "获取文章评论列表")
+    @ApiOperation(value = "/list/{parentId}/{parentId}", notes = "获取子评论列表")
     public MultiResponse<ArticleCommentDto> listByParentId(ArticleCommentListParam articleCommentListParam,
                                                            @PathVariable Long articleId,
                                                            @PathVariable Long parentId) {

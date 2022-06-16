@@ -81,11 +81,11 @@ public class ArticleService {
         int page = articleListParam.getPage();
         int size = articleListParam.getSize();
         Set<Long> set = redisTemplate.opsForZSet().reverseRange(RedisConstant.REDIS_ZSET_HOT_INDEX, (page - 1) * size, page * size - 1);
-        List<ArticleDto> result=new ArrayList<>();
+        List<ArticleDto> result = new ArrayList<>();
         for (Long id : set) {
             Article article = articleMapper.selectById(id);
             result.add(article.getDto(userFeignService.getAvatarAndUsername(article.getUserId()).getData()));
-            System.out.println(redisTemplate.opsForZSet().score(RedisConstant.REDIS_ZSET_HOT_INDEX,id));
+            System.out.println(redisTemplate.opsForZSet().score(RedisConstant.REDIS_ZSET_HOT_INDEX, id));
         }
         return result;
     }

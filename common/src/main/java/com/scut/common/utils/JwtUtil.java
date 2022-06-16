@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Slf4j
 public class JwtUtil {
-    private static final long expiredMills = 3 * 60 * 60 * 1000;//九十秒的有效时间
+    private static final long expiredMills = 15 * 24 * 60 * 60 * 1000;//15天有效期
     private static final String signature = "das@!#^11vfiuq35u98-4y287qe1";
 
     public static String createToken(CreateTokenParam createTokenParam) {

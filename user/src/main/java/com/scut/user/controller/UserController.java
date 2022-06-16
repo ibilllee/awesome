@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.scut.common.constant.MQConstant;
 import com.scut.common.dto.request.*;
 import com.scut.common.dto.response.*;
+import com.scut.common.response.MultiResponse;
 import com.scut.common.response.SingleResponse;
 import com.scut.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 import static com.scut.common.constant.HttpConstant.USER_ID_HEADER;
 
@@ -28,10 +31,10 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private  HttpServletRequest request;
+    private HttpServletRequest request;
 
     @PostMapping("/submit")
-    @ApiOperation(value = "/submit",notes = "注册新用户")
+    @ApiOperation(value = "/submit", notes = "注册新用户")
     public SingleResponse<String> submit(@RequestBody RegisterAndLoginParam registerParam) throws Exception {
         int result = userService.register(registerParam);
         if (result == -1)
@@ -39,14 +42,14 @@ public class UserController {
         else if (result == -2)
             return new SingleResponse<String>().error(null, 1002, "注册密码格式错误");
         else if (result == -3)
-            return new SingleResponse<String>().unknown(null,"未知错误");
+            return new SingleResponse<String>().unknown(null, "未知错误");
         else if (result == -4)
             return new SingleResponse<String>().error(null, 1001, "邮箱已被注册");
         return new SingleResponse<String>().success("注册成功!");
     }
 
     @PostMapping("/login")
-    @ApiOperation(value = "/login",notes = "登录")
+    @ApiOperation(value = "/login", notes = "登录")
     public SingleResponse<UserWithTokenDto> login(@RequestBody RegisterAndLoginParam loginParam) throws Exception {
         UserWithTokenDto userWithTokenDto = userService.login(loginParam);
         long result = userWithTokenDto.getId();
@@ -55,13 +58,13 @@ public class UserController {
         else if (result == -2)
             return new SingleResponse<UserWithTokenDto>().error(null, 1009, "登录邮箱未注册");
         else if (result == -3)
-            return new SingleResponse<UserWithTokenDto>().error(null, 1004,"登录密码错误");
+            return new SingleResponse<UserWithTokenDto>().error(null, 1004, "登录密码错误");
         return new SingleResponse<UserWithTokenDto>().success(userWithTokenDto);
     }
 
     @PostMapping("/logout")
-    @ApiOperation(value = "/logout",notes = "退出登录")
-    public SingleResponse<String> logout(){
+    @ApiOperation(value = "/logout", notes = "退出登录")
+    public SingleResponse<String> logout() {
         //参数是@RequestHeader(value="USERNAME")String username
         //返回值String为""
         return null;
@@ -71,7 +74,7 @@ public class UserController {
     @ApiOperation(value = "/get/info", notes = "获取用户相关信息")
     public SingleResponse<UserDto> getUserInfo(@RequestHeader(USER_ID_HEADER) Long userId) {
         UserDto userDto = userService.getUserDtoById(userId);
-        if(userDto == null){
+        if (userDto == null) {
             return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
         }
         return new SingleResponse<UserDto>().success(userDto);
@@ -80,7 +83,7 @@ public class UserController {
     @PutMapping("/update/username")
     @ApiOperation(value = "/update/username", notes = "更新用户名")
     public SingleResponse<UserDto> updateUsername(@RequestBody UsernameParam usernameParam,
-                                                @RequestHeader(USER_ID_HEADER) Long userId) {
+                                                  @RequestHeader(USER_ID_HEADER) Long userId) {
         int result = userService.updateUsername(usernameParam.getUsername(), userId);
         if (result == -1)
             return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
@@ -95,7 +98,7 @@ public class UserController {
     @PutMapping("/update/introduce")
     @ApiOperation(value = "/update/introduce", notes = "更新个性签名")
     public SingleResponse<UserDto> updateIntroduce(@RequestBody IntroduceParam introduceParam,
-                                                @RequestHeader(USER_ID_HEADER) Long userId) {
+                                                   @RequestHeader(USER_ID_HEADER) Long userId) {
         int result = userService.updateIntroduce(introduceParam.getIntroduce(), userId);
         if (result == -1)
             return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
@@ -121,7 +124,7 @@ public class UserController {
     @PutMapping("/update/cover")
     @ApiOperation(value = "/update/cover", notes = "更新用户中心封面地址")
     public SingleResponse<UserDto> updateCover(@RequestBody CoverParam coverParam,
-                                                @RequestHeader(USER_ID_HEADER) Long userId) {
+                                               @RequestHeader(USER_ID_HEADER) Long userId) {
         int result = userService.updateCover(coverParam.getCover(), userId);
         if (result == -1)
             return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
@@ -130,6 +133,7 @@ public class UserController {
         UserDto userDto = userService.getUserDtoById(userId);
         return new SingleResponse<UserDto>().success(userDto);
     }
+
     @PutMapping("/update/password")
     @ApiOperation(value = "/update/password", notes = "修改密码")
     public SingleResponse<UserDto> updatePassword(@RequestBody PasswordParam passwordParam,
@@ -152,7 +156,7 @@ public class UserController {
     public SingleResponse<RetrievePasswordDto> retrievePassword(@RequestBody EmailParam emailParam) {
         //客户端在点击“找回密码”后进入新的界面A，在界面输入email,然后发送请求
         RetrievePasswordDto retrievePasswordDto = userService.retrievePassword(emailParam.getEmail());
-        if(retrievePasswordDto == null){
+        if (retrievePasswordDto == null) {
             return new SingleResponse<RetrievePasswordDto>().error(null, 1007, "该用户不存在");
         }
         return new SingleResponse<RetrievePasswordDto>().success(retrievePasswordDto);
@@ -172,7 +176,7 @@ public class UserController {
         //4、若不相等，返回String提示用户验证码错误
 
         int result = userService.verifyCorrectness(verificationCodeParam);
-        if(result == -1)
+        if (result == -1)
             return new SingleResponse<String>().error(null, 1011, "验证码错误");
         else if (result == -2)
             return new SingleResponse<String>().error(null, 1006, "新密码格式错误");
@@ -184,9 +188,58 @@ public class UserController {
     @GetMapping("/get/avatarAndUsername")
     @ApiOperation(value = "/get/avatarAndUsername", notes = "获取用户相关信息")
     public SingleResponse<UserAvatarAndUsernameDto> getAvatarAndUsername(long id) {
-        UserAvatarAndUsernameDto dto=userService.getAvatarAndUsername(id);
-        if(dto==null)
-            return new SingleResponse<UserAvatarAndUsernameDto>().unknown(null,"未知错误");
+        UserAvatarAndUsernameDto dto = userService.getAvatarAndUsername(id);
+        if (dto == null)
+            return new SingleResponse<UserAvatarAndUsernameDto>().unknown(null, "未知错误");
         return new SingleResponse<UserAvatarAndUsernameDto>().success(dto);
+    }
+
+    @PostMapping("/follow/{userId}")
+    @ApiOperation(value = "/follow/{userId}", notes = "关注用户")
+    public SingleResponse<Boolean> followUser(@PathVariable("userId") Long followUserId,
+                                              @RequestHeader(USER_ID_HEADER) Long userId) {
+        int result = userService.followUser(userId, followUserId);
+        if (result == -1)
+            return new SingleResponse<Boolean>().error(false, 1007, "用户不存在");
+        else if (result == -2)
+            return new SingleResponse<Boolean>().error(false, 1008, "已经关注");
+        else if (result == 0)
+            return new SingleResponse<Boolean>().unknown(false, "未知错误");
+        return new SingleResponse<Boolean>().success(true);
+    }
+
+    @DeleteMapping("/unfollow/{userId}")
+    @ApiOperation(value = "/unfollow/{userId}", notes = "取消关注用户")
+    public SingleResponse<Boolean> unfollowUser(@PathVariable("userId") Long followUserId,
+                                                @RequestHeader(USER_ID_HEADER) Long userId) {
+        int result = userService.unfollowUser(userId, followUserId);
+        if (result == -1)
+            return new SingleResponse<Boolean>().error(false, 1007, "用户不存在");
+        else if (result == -2)
+            return new SingleResponse<Boolean>().error(false, 1008, "已经取消关注");
+        else if (result == 0)
+            return new SingleResponse<Boolean>().unknown(false, "未知错误");
+        return new SingleResponse<Boolean>().success(true);
+    }
+
+    @GetMapping("/isFollow/{userId}")
+    @ApiOperation(value = "/isFollow/{userId}", notes = "判断是否关注用户")
+    public SingleResponse<Boolean> isFollowUser(@PathVariable("userId") Long followUserId,
+                                                @RequestHeader(USER_ID_HEADER) Long userId) {
+        int result = userService.isFollowUser(userId, followUserId);
+        if (result == -1)
+            return new SingleResponse<Boolean>().error(false, 1007, "用户不存在");
+        else if (result == 0)
+            return new SingleResponse<Boolean>().unknown(false, "未知错误");
+        return new SingleResponse<Boolean>().success(true);
+    }
+
+    @GetMapping("/list/following")
+    @ApiOperation(value = "/list/following", notes = "获取关注的用户列表")
+    public MultiResponse<UserDto> getFollowingList(@RequestHeader(USER_ID_HEADER) Long userId) {
+        List<UserDto> dto = userService.getFollowingList(userId);
+        if (dto == null)
+            return new MultiResponse<UserDto>().unknown(null, "未知错误");
+        return new MultiResponse<UserDto>().success(dto);
     }
 }

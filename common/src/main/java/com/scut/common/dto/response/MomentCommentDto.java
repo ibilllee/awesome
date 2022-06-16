@@ -9,10 +9,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MomentCommentDto {
     private long id;
-    private String userId;
-    private String momentId;
+    private long userId;
+    private long momentId;
     private String content;
     private long replyId;
     private long replyCount;
     private long createTime;
+    private String avatar;
+    private String username;
+
+    public MomentCommentDto(long id){
+        this.id = id;
+    }
 }
