@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.scut.common.constant.MQConstant;
 import com.scut.common.dto.request.*;
 import com.scut.common.dto.response.*;
+import com.scut.common.response.MultiResponse;
 import com.scut.common.response.SingleResponse;
 import com.scut.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 import static com.scut.common.constant.HttpConstant.USER_ID_HEADER;
 
@@ -229,5 +232,14 @@ public class UserController {
         else if (result == 0)
             return new SingleResponse<Boolean>().unknown(false, "未知错误");
         return new SingleResponse<Boolean>().success(true);
+    }
+
+    @GetMapping("/list/following")
+    @ApiOperation(value = "/list/following", notes = "获取关注的用户列表")
+    public MultiResponse<UserDto> getFollowingList(@RequestHeader(USER_ID_HEADER) Long userId) {
+        List<UserDto> dto = userService.getFollowingList(userId);
+        if (dto == null)
+            return new MultiResponse<UserDto>().unknown(null, "未知错误");
+        return new MultiResponse<UserDto>().success(dto);
     }
 }

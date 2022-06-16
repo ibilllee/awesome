@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -278,5 +279,17 @@ public class UserService {
                 new QueryWrapper<UserFollow>()
                         .eq("user_id", userId)
                         .eq("follow_user_id", followUserId)) != null ? 1 : 0;
+    }
+
+    public List<UserDto> getFollowingList(Long userId) {
+        List<User> users = userMapper.selectList(new QueryWrapper<User>().
+                exists(" SELECT 1 FROM user_follow " +
+                        " WHERE follow_user_id = user.id " +
+                        " AND user_id = " + userId));
+        ArrayList<UserDto> userDtos = new ArrayList<>();
+        for (User user : users) {
+            userDtos.add(user.getDto());
+        }
+        return userDtos;
     }
 }

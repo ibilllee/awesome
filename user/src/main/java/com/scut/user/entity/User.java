@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.scut.common.dto.request.RegisterAndLoginParam;
+import com.scut.common.dto.response.UserDto;
 import com.scut.common.utils.MD5Util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,5 +33,9 @@ public class User {
         cover = "";
         introduce = "";
         createTime = System.currentTimeMillis();
+    }
+
+    public UserDto getDto(){
+        return new UserDto(email, username, avatar, cover, introduce);
     }
 }
