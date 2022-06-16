@@ -90,6 +90,7 @@
             <artifactId>swagger-models</artifactId>
             <version>${swagger.models.version}</version>
         </dependency>
+
     </dependencies>
 
     <dependencyManagement>
