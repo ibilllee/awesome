@@ -1,0 +1,17 @@
+server:
+  port: 8006
+  servlet:
+    context-path: /file-service
+
+spring:
+  application:
+    name: file-service
+  cloud:
+    nacos:
+      server-addr: 119.91.73.146:8848
+      discovery:
+        username: nacos
+        password: PublicCode2001!
+        namespace: public
+  profiles:
+    active:  host

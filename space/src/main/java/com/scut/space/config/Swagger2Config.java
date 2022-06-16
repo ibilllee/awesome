@@ -19,7 +19,7 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.scut.Space.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.scut.space.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
