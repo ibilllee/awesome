@@ -30,9 +30,11 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();//获取请求
         ServerHttpResponse response = exchange.getResponse();//获取响应
-        //如果是注册、登录请求则放行
+        //如果是注册、登录、找回密码相关请求则放行
         if (request.getURI().getPath().contains("/user/login") ||
-                request.getURI().getPath().contains("/user/submit")) {
+                request.getURI().getPath().contains("/user/submit") ||
+                request.getURI().getPath().contains("/retrieve/password") ||
+                request.getURI().getPath().contains("/verify/password")) {
             return chain.filter(exchange);
         }
 
