@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,7 +29,7 @@ public class User {
     public User(RegisterAndLoginParam registerParam) throws Exception {
         email = registerParam.getEmail();
         password = MD5Util.convertMD5(registerParam.getPassword());
-        username = "";
+        username = UUID.randomUUID().toString();
         avatar = "";
         cover = "";
         introduce = "";

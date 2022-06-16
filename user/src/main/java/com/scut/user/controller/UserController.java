@@ -166,11 +166,6 @@ public class UserController {
          * 在新的界面B中填写新密码，确认密码，填写验证码
          * 点击“确认按钮”后发送“/verify”请求向后端发送以上数据以及token串
          * */
-        //1、设传入的验证码为A',通过token B,从Redis中获取验证码A
-        //2、判断A'和A是否相等
-        //3、若相等，修改密码，返回的String提示用户成功
-        //4、若不相等，返回String提示用户验证码错误
-
         int result = userService.verifyCorrectness(verificationCodeParam);
         if(result == -1)
             return new SingleResponse<String>().error(null, 1011, "验证码错误");

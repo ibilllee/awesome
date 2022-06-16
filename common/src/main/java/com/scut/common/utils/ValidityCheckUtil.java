@@ -12,7 +12,7 @@ public class ValidityCheckUtil {
      * */
     public static boolean isValidEmail(String email) {
         if ((email != null) && (!email.isEmpty())) {
-            return Pattern.matches("^([A-Za-z0-9]+([-.]\\w+)*){3,18}@\\w+\\.([A-Za-z0-9]+)$", email);
+            return Pattern.matches("^([A-Za-z0-9]+([-.]\\w+)*)@\\w+(\\.[a-zA-Z0-9_-]+)+$", email);
         }
         return false;
     }
