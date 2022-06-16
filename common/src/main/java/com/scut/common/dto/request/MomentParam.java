@@ -13,4 +13,6 @@ import lombok.NoArgsConstructor;
 public class MomentParam {
     @ApiModelProperty(value = "动态内容", required = true)
     private String content;
+    @ApiModelProperty(value = "附件 (JSON化后的图片地址等)", required = true)
+    private String attachment;
 }

@@ -38,7 +38,7 @@ public class Article {
         createTime = updateTime = System.currentTimeMillis();
         tag = articleParam.getTag();
         viewCount = 0L;
-        attachment = "";
+        attachment = articleParam.getAttachment();
     }
 
     public ArticleDto getDto(UserAvatarAndUsernameDto dto) {
