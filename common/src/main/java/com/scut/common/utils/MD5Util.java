@@ -3,7 +3,7 @@ package com.scut.common.utils;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class MD5Util {
-    private static String key = "awesome";
+    private static String key = "dssas@^11vfis#$%d22u98-411ssqe1";
     // 带秘钥加密
     public static String convertMD5(String text) throws Exception {
         // 加密后的字符串
