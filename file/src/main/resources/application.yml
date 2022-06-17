@@ -13,5 +13,6 @@ spring:
         username: nacos
         password: PublicCode2001!
         namespace: public
+        ip: 106.52.95.25
   profiles:
     active:  host

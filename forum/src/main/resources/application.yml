@@ -13,6 +13,7 @@ spring:
         username: nacos
         password: PublicCode2001!
         namespace: public
+        ip: 8.135.61.132
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://119.91.73.146/awesome?useUnicode=true&characterEncoding=utf8
