@@ -13,6 +13,7 @@ spring:
         username: nacos
         password: PublicCode2001!
         namespace: public
+        ip: 106.52.95.25
   redis:
     host: 119.91.73.146
     port: 6379

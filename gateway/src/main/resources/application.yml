@@ -41,6 +41,8 @@ spring:
         server-addr: 119.91.73.146:8848
         username: nacos
         password: PublicCode2001!
+        namespace: public
+        ip: 8.135.61.132
 
 logging:
   level:
