@@ -1,49 +1,49 @@
-server:
-  port: 8000
-spring:
-  application:
-    name: api-gateway
-  cloud:
-    gateway:
-      routes:
-        - id: user_route
-          uri: lb://user-service
-          predicates:
-            - Path=/user-service/**
-        - id: space_route
-          uri: lb://space-service
-          predicates:
-            - Path=/space-service/**
-        - id: board_route
-          uri: lb://board-service
-          predicates:
-            - Path=/board-service/**
-        - id: forum_route
-          uri: lb://forum-service
-          predicates:
-            - Path=/forum-service/**
-        - id: inform_route
-          uri: lb://inform-service
-          predicates:
-            - Path=/inform-service/**
-      globalcors:
-        cors‐configurations: #跨域配置
-          '[/**]': #允许访问的资源
-            allowedOrigins: "*" #允许来源
-            allowedMethods:
-              - GET
-              - POST
-              - DELETE
-              - PUT
-              - OPTION
-    nacos:
-      discovery:
-        server-addr: 119.91.73.146:8848
-        username: nacos
-        password: PublicCode2001!
-        namespace: public
-        ip: 8.135.61.132
-
-logging:
-  level:
-    root: info
+#server:
+#  port: 8000
+#spring:
+#  application:
+#    name: api-gateway
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: user_route
+#          uri: lb://user-service
+#          predicates:
+#            - Path=/user-service/**
+#        - id: space_route
+#          uri: lb://space-service
+#          predicates:
+#            - Path=/space-service/**
+#        - id: board_route
+#          uri: lb://board-service
+#          predicates:
+#            - Path=/board-service/**
+#        - id: forum_route
+#          uri: lb://forum-service
+#          predicates:
+#            - Path=/forum-service/**
+#        - id: inform_route
+#          uri: lb://inform-service
+#          predicates:
+#            - Path=/inform-service/**
+#      globalcors:
+#        cors‐configurations: #跨域配置
+#          '[/**]': #允许访问的资源
+#            allowedOrigins: "*" #允许来源
+#            allowedMethods:
+#              - GET
+#              - POST
+#              - DELETE
+#              - PUT
+#              - OPTION
+#    nacos:
+#      discovery:
+#        server-addr: 119.91.73.146:8848
+#        username: nacos
+#        password: PublicCode2001!
+#        namespace: public
+#        ip: 8.135.61.132
+#
+#logging:
+#  level:
+#    root: info

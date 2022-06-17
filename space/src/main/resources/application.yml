@@ -1,36 +1,36 @@
-server:
-  port: 8002
-  servlet:
-    context-path: /space-service
-
-spring:
-  application:
-    name: space-service
-  cloud:
-    nacos:
-      server-addr: 119.91.73.146:8848
-      discovery:
-        username: nacos
-        password: PublicCode2001!
-        namespace: public
-        ip: 106.52.95.25
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.91.73.146/awesome?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: PublicCode2001!
-  redis:
-    host: 119.91.73.146
-    port: 6379
-    password: PublicCode2001!
-
-
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    map-underscore-to-camel-case: true
-
-rocketmq:
-  name-server: 119.91.73.146:9876
-  producer:
-    group: space_producer_group
+#server:
+#  port: 8002
+#  servlet:
+#    context-path: /space-service
+#
+#spring:
+#  application:
+#    name: space-service
+#  cloud:
+#    nacos:
+#      server-addr: 119.91.73.146:8848
+#      discovery:
+#        username: nacos
+#        password: PublicCode2001!
+#        namespace: public
+#        ip: 106.52.95.25
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://119.91.73.146/awesome?useUnicode=true&characterEncoding=utf8
+#    username: root
+#    password: PublicCode2001!
+#  redis:
+#    host: 119.91.73.146
+#    port: 6379
+#    password: PublicCode2001!
+#
+#
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    map-underscore-to-camel-case: true
+#
+#rocketmq:
+#  name-server: 119.91.73.146:9876
+#  producer:
+#    group: space_producer_group
