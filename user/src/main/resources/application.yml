@@ -19,9 +19,10 @@ spring:
     url: jdbc:mysql://119.91.73.146/awesome?useUnicode=true&characterEncoding=utf8&useAffectedRows=true
     username: root
     password: PublicCode2001!
-    redis:
-      port: 6379
-      password: PublicCode2001!
+  redis:
+    host: 119.91.73.146
+    port: 6379
+    password: PublicCode2001!
 
 mybatis-plus:
   configuration:
