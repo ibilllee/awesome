@@ -70,9 +70,9 @@ public class UserController {
         return null;
     }
 
-    @PostMapping("/get/info")
-    @ApiOperation(value = "/get/info", notes = "获取用户相关信息")
-    public SingleResponse<UserDto> getUserInfo(@RequestHeader(USER_ID_HEADER) Long userId) {
+    @PostMapping("/get/info/{userId}")
+    @ApiOperation(value = "/get/info/{userId}", notes = "获取用户相关信息")
+    public SingleResponse<UserDto> getUserInfo(@PathVariable("userId") Long userId) {
         UserDto userDto = userService.getUserDtoById(userId);
         if (userDto == null) {
             return new SingleResponse<UserDto>().error(null, 1007, "该用户不存在");
