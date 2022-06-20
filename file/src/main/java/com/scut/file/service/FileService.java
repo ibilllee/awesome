@@ -12,23 +12,26 @@ import java.util.UUID;
 
 @Service
 public class FileService {
-    @Value("${project.my-address}")
-    private String myAddress;
+    //    @Value("${project.my-address}")
+//    private String myAddress;
+    @Value("${project.file-destination}")
+    private String fileDestination;
+    @Value("${project.file-dir}")
+    private String fileDir;
 
     public FileDto uploadFile(MultipartFile avatar, long userId) {
         File file = null;
         try {
-            file = FileUtils.multipartFileToFile("static/file/" + userId + "/",
+            file = FileUtils.multipartFileToFile(fileDestination + "/" + userId + "/",
                     UUID.randomUUID() + avatar.getName(), avatar);
         } catch (Exception e) {
             return null;
         }
-        return new FileDto(file.getName(), myAddress + "file/" + userId + "/" + file.getName());
+        return new FileDto(file.getName(), fileDir + "/" + userId + "/" + file.getName());
     }
 
     public int removeFile(String fileName, long userId) {
-        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()
-                + "static/file/" + userId + "/" + fileName;
+        String path = fileDestination + "/" + userId + "/" + fileName;
         return FileUtils.deleteFile(path);
     }
 }

@@ -1,2 +1,3 @@
 #project:
-#  my-address: localhost:8006/file-service/
+#  file-destination: /root/awesome/tomcat8/webapps/file
+#  file-dir: http://localhost:8007/file/

@@ -69,10 +69,10 @@ public class MomentService {
         return momentsToMomentDtos(page.getRecords());
     }
 
-    public List<MomentDto> getMyList(MomentListParam momentListParam, Long userId) {
+    public List<MomentDto> getTargetUserList(MomentListParam momentListParam, long targetUserId) {
         Page<Moment> momentPage = new Page<>(momentListParam.getPage(), momentListParam.getSize());
         Page<Moment> page = new LambdaQueryChainWrapper<>(momentMapper)
-                .eq(Moment::getUserId, userId)
+                .eq(Moment::getUserId, targetUserId)
                 .orderByDesc(Moment::getCreateTime)
                 .page(momentPage);
         return momentsToMomentDtos(page.getRecords());

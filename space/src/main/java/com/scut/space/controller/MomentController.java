@@ -55,11 +55,11 @@ public class MomentController {
         return new MultiResponse<MomentDto>().success(result);
     }
 
-    @GetMapping("/myList")
-    @ApiOperation(value = "/myList", notes = "获取我的动态列表")
-    public MultiResponse<MomentDto> myList(MomentListParam momentListParam,
-                                           @RequestHeader(USER_ID_HEADER) Long userId) {
-        List<MomentDto> result = momentService.getMyList(momentListParam, userId);
+    @GetMapping("/list/{userId}")
+    @ApiOperation(value = "/list/{userId}", notes = "获取某个用户的动态列表")
+    public MultiResponse<MomentDto> userList(MomentListParam momentListParam,
+                                             @PathVariable("userId") long targetUserId) {
+        List<MomentDto> result = momentService.getTargetUserList(momentListParam, targetUserId);
         if (result == null)
             return new MultiResponse<MomentDto>().unknown(null, "未知错误");
         return new MultiResponse<MomentDto>().success(result);

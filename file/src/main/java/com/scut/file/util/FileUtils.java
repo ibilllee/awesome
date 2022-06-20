@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 
 public class FileUtils {
-    public static File multipartFileToFile(String relativePath, String userId, MultipartFile file) throws Exception {
+    public static File multipartFileToFile(String path, String userId, MultipartFile file) throws Exception {
 
         File toFile = null;
         if (file.equals("") || file.getSize() <= 0) {
@@ -14,7 +14,8 @@ public class FileUtils {
         } else {
             InputStream ins = null;
             ins = file.getInputStream();
-            String dirPath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + relativePath;
+//            String dirPath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + path;
+            String dirPath =  path;
             String filePath = dirPath + userId + getExtName(file.getOriginalFilename(), '.');
 
             new File(dirPath).mkdirs();

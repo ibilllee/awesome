@@ -6,6 +6,7 @@ import com.scut.common.dto.response.FileDto;
 import com.scut.common.response.MultiResponse;
 import com.scut.common.response.SingleResponse;
 import com.scut.file.service.FileService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,16 @@ import static com.scut.common.constant.HttpConstant.USER_ID_HEADER;
 public class FileController {
     @Resource
     private FileService fileService;
+
+    @Value("${project.file-destination}")
+    private String fileDestination;
+    @Value("${project.file-dir}")
+    private String fileDir;
+
+    @GetMapping("/test")
+    public String test() {
+        return fileDestination+" ; "+fileDir;
+    }
 
     @PostMapping("/submit")
     public SingleResponse<FileDto> uploadFile(UploadFileParam uploadFileParam,
