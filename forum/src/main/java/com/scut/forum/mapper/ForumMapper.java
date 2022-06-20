@@ -10,8 +10,8 @@ import java.util.Map;
 
 @Mapper
 public interface ForumMapper extends BaseMapper<Forum> {
-    @Select(" SELECT cover, logo FROM game WHERE id = #{gameId} ")
-    Map<Object, String> selectCoverAndLogoByGameId(@Param("gameId") long gameId);
+    @Select(" SELECT cover, logo, name FROM game WHERE id = #{gameId} ")
+    Map<Object, String> selectCoverAndLogoAndNameByGameId(@Param("gameId") long gameId);
 
     @Select({"${sql}"})
     @ResultType(Forum.class)

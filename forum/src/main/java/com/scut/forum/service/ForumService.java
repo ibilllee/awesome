@@ -16,7 +16,6 @@ import com.scut.forum.mapper.ForumMapper;
 import com.scut.forum.mapper.ForumTagMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -36,10 +35,11 @@ public class ForumService {
     public ForumDto submit(ForumParam forumParam) {
         Forum forum = new Forum(0L, forumParam.getGameId(), 0L, 0L);
         if (forumMapper.insert(forum) == 1) {
-            Map<Object, String> objects = forumMapper.selectCoverAndLogoByGameId(forumParam.getGameId());
+            Map<Object, String> objects = forumMapper.selectCoverAndLogoAndNameByGameId(forumParam.getGameId());
             String cover = objects.get("cover");
             String logo = objects.get("logo");
-            return new ForumDto(forum.getId(), forum.getGameId(), 0, 0, cover, logo);
+            String name = objects.get("name");
+            return new ForumDto(forum.getId(), forum.getGameId(), 0, 0, cover, logo, name);
         }
         return null;
     }
@@ -47,10 +47,11 @@ public class ForumService {
     public ForumDto get(long id) {
         Forum forum = forumMapper.selectById(id);
         if (forum != null) {
-            Map<Object, String> objects = forumMapper.selectCoverAndLogoByGameId(forum.getGameId());
+            Map<Object, String> objects = forumMapper.selectCoverAndLogoAndNameByGameId(forum.getGameId());
             String cover = objects.get("cover");
             String logo = objects.get("logo");
-            return new ForumDto(forum.getId(), forum.getGameId(), 0, 0, cover, logo);
+            String name = objects.get("name");
+            return new ForumDto(forum.getId(), forum.getGameId(), 0, 0, cover, logo, name);
         }
         return null;
     }
@@ -86,10 +87,11 @@ public class ForumService {
     private List<ForumDto> forumsToForumDtos(List<Forum> forums) {
         List<ForumDto> forumDtos = new ArrayList<>();
         for (Forum forum : forums) {
-            Map<Object, String> objects = forumMapper.selectCoverAndLogoByGameId(forum.getGameId());
+            Map<Object, String> objects = forumMapper.selectCoverAndLogoAndNameByGameId(forum.getGameId());
             String cover = objects.get("cover");
             String logo = objects.get("logo");
-            forumDtos.add(new ForumDto(forum.getId(), forum.getGameId(), 0, 0, cover, logo));
+            String name = objects.get("name");
+            forumDtos.add(new ForumDto(forum.getId(), forum.getGameId(), 0, 0, cover, logo, name));
         }
         return forumDtos;
     }

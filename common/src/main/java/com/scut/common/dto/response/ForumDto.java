@@ -13,5 +13,6 @@ public class ForumDto {
     private long favorCount;
     private long articleCount;
     private String cover;
+    private String logo;
     private String name;
 }
