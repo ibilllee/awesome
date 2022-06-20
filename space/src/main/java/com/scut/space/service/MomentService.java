@@ -112,7 +112,7 @@ public class MomentService {
                         "您的动态有新增点赞");
                 rocketMQTemplate.convertAndSend(MQConstant.TOPIC_PUSH_INFORM, informDto);
                 return 1;
-            }else {
+            } else {
                 return 0;
             }
         } else {
@@ -121,7 +121,7 @@ public class MomentService {
     }
 
     public int unlike(long id, Long userId) {
-        if(momentMapper.selectById(id)==null)
+        if (momentMapper.selectById(id) == null)
             return -1;
         MomentLike momentLike = this.momentLikeMapper.selectOne(new QueryWrapper<MomentLike>().
                 eq("moment_id", id)
@@ -129,21 +129,21 @@ public class MomentService {
         if (momentLike == null) {
             return -2;
         } else {
-            if(momentLikeMapper.delete(new QueryWrapper<MomentLike>().
+            if (momentLikeMapper.delete(new QueryWrapper<MomentLike>().
                     eq("moment_id", id)
-                    .eq("user_id", userId))==1){
+                    .eq("user_id", userId)) == 1) {
                 momentLikeMapper.updateLikeCount(id, -1);
                 return 1;
-            }else {
+            } else {
                 return 0;
             }
         }
     }
 
-    public boolean isLike(long userId,long id){
+    public boolean isLike(long id, long userId) {
         return momentLikeMapper.selectOne(new QueryWrapper<MomentLike>().
                 eq("moment_id", id)
-                .eq("user_id", userId))!=null;
+                .eq("user_id", userId)) != null;
 
     }
 
