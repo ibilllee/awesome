@@ -84,6 +84,7 @@ public class ArticleService {
         List<ArticleDto> result = new ArrayList<>();
         for (Long id : set) {
             Article article = articleMapper.selectById(id);
+            if(article==null) continue;
             result.add(article.getDto(userFeignService.getAvatarAndUsername(article.getUserId()).getData()));
             System.out.println(redisTemplate.opsForZSet().score(RedisConstant.REDIS_ZSET_HOT_INDEX, id));
         }
@@ -121,6 +122,7 @@ public class ArticleService {
     public int delete(long id, long userId) {
         Article article = articleMapper.selectById(id);
         if (article == null) return 0;
+        redisTemplate.opsForZSet().remove(RedisConstant.REDIS_ZSET_HOT_INDEX, id);
         if (article.getUserId() != userId) return -1;
         return articleMapper.deleteById(id);
     }

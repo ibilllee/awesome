@@ -21,4 +21,11 @@ public class GlobalExceptionHandler {
         log.error("缺少请求参数，{}", ex.getMessage());
         return new SingleResponse<Boolean>().error(null, -2, "缺少请求参数");
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public SingleResponse<Boolean> handleException(Exception ex) {
+        log.error("服务器内部错误: {}", ex.getMessage());
+        return new SingleResponse<Boolean>().error(null, -1, "服务器内部错误: " + ex.getMessage());
+    }
 }

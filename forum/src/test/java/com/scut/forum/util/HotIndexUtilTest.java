@@ -18,11 +18,22 @@ class HotIndexUtilTest {
     private RedisTemplate redisTemplate;
     @Test
     public void test1(){
-        Set<Long> range = redisTemplate.opsForZSet().reverseRange(RedisConstant.REDIS_ZSET_HOT_INDEX, 0, 0);
+
+//        for(int id=1;id<=20;id++)
+//            redisTemplate.opsForZSet().remove(RedisConstant.REDIS_ZSET_HOT_INDEX, id);
+//
+//        redisTemplate.opsForZSet().removeRange(RedisConstant.REDIS_ZSET_HOT_INDEX, 0, -1);
+//
+        Set<Long> range = redisTemplate.opsForZSet().reverseRange(RedisConstant.REDIS_ZSET_HOT_INDEX, 0, -1);
         for (Long o : range) {
             System.out.println(o);
             System.out.println(redisTemplate.opsForZSet().score(RedisConstant.REDIS_ZSET_HOT_INDEX,o));
+            System.out.println(redisTemplate.opsForZSet().score(RedisConstant.REDIS_ZSET_HOT_INDEX,o));
         }
-    }
+
+//        redisTemplate.opsForZSet().add(RedisConstant.REDIS_ZSET_HOT_INDEX, 21L, 0);
+
+
+}
 
 }
