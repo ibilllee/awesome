@@ -21,4 +21,8 @@ public class GameDetailsDto {
     long scoreCount; //评分数量
     long totalScore; //评分总和
     String description; //简要描述
+
+    public GameDetailsDto(long id) {
+        this.id = id;
+    }
 }

@@ -68,16 +68,14 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Boolean addGame(GameParam game) {
+    public GameDetailsDto addGame(GameParam game) {
         long gameCount = gameDetailsMapper.selectGameDetailsByName(game.getName());
-        if (gameCount != 0) return false;
-        gameDetailsMapper.addGame(game.getName(),
-                game.getCover(),
-                game.getLogo(),
-                game.getIssuedTime(),
-                game.getDownloadLink(),
-                game.getClassify(),
-                game.getDescription());
-        return true;
+        if (gameCount != 0) return new GameDetailsDto(-1L);
+        GameDetails gameDetails = new GameDetails(game);
+        int count = gameDetailsMapper.insert(gameDetails);
+        if(count==1){
+            return gameDetails.getDto();
+        }
+        return null;
     }
 }

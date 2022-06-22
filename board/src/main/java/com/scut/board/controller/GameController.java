@@ -34,7 +34,7 @@ public class GameController {
     public SingleResponse<GameDetailsDto> getGameDetails(@RequestParam long id) {
         GameDetailsDto gameDetailsDto;
         gameDetailsDto = gameService.getGameDetails(id);
-        if (gameDetailsDto!=null) return new SingleResponse<GameDetailsDto>().success(gameDetailsDto);
+        if (gameDetailsDto != null) return new SingleResponse<GameDetailsDto>().success(gameDetailsDto);
         else
             return new SingleResponse<GameDetailsDto>().error(null, 3001, "游戏ID不存在");
     }
@@ -58,12 +58,15 @@ public class GameController {
         } else return new SingleResponse<String>().error(null, 3001, "游戏的ID不存在");
     }
 
-    @GetMapping("/submit")
+    @PostMapping("/submit")
     @ApiOperation(value = "/submit", notes = "添加游戏")
-    public SingleResponse<Boolean> addGame(@RequestBody GameParam game) {
+    public SingleResponse<GameDetailsDto> addGame(@RequestBody GameParam game) {
 
-        Boolean status = gameService.addGame(game);
-
-        return new SingleResponse<Boolean>().success(true);
+        GameDetailsDto result = gameService.addGame(game);
+        if (result == null)
+            return new SingleResponse<GameDetailsDto>().unknown(null, "未知错误");
+        else if (result.getId() == -1L)
+            return new SingleResponse<GameDetailsDto>().error(null, 3004, "游戏已存在");
+        return new SingleResponse<GameDetailsDto>().success(result);
     }
 }

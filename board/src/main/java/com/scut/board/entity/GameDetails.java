@@ -3,6 +3,8 @@ package com.scut.board.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.scut.common.dto.request.GameParam;
+import com.scut.common.dto.response.GameDetailsDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,31 @@ public class GameDetails {
     Long scoreCount; //评分数量
     Long totalScore; //评分总和
     String description; //简要描述
+
+    public GameDetails(GameParam gameParam) {
+        this.name = gameParam.getName();
+        this.cover = gameParam.getCover();
+        this.logo = gameParam.getLogo();
+        this.issuedTime = gameParam.getIssuedTime();
+        this.downloadLink = gameParam.getDownloadLink();
+        this.classify = gameParam.getClassify();
+        this.score = 0.0f;
+        this.scoreCount = 0L;
+        this.totalScore = 0L;
+        this.description = gameParam.getDescription();
+    }
+
+    public GameDetailsDto getDto() {
+        return new GameDetailsDto(this.id,
+                this.name,
+                this.cover,
+                this.logo,
+                this.issuedTime,
+                this.downloadLink,
+                this.classify,
+                this.score,
+                this.scoreCount,
+                this.totalScore,
+                this.description);
+    }
 }

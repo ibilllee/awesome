@@ -11,5 +11,5 @@ public interface GameService {
     GameDetailsDto getGameDetails(long gameId);
     List<SearchGameListDto> getGameListBySearch(String Keyword);
 
-    Boolean addGame(GameParam game);
+    GameDetailsDto addGame(GameParam game);
 }
