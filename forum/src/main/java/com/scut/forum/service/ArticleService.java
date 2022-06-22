@@ -64,9 +64,9 @@ public class ArticleService {
         if (count == 1) {
             forumService.submitTag(new ForumTagParam(article.getForumId(), article.getTag()));
             forumMapper.updateArticleCount(articleParam.getForumId(), 1);
+            HotIndexUtil.updateArticleHotIndex(article);
             return article.getDto(userFeignService.getAvatarAndUsername(userId).getData());
         }
-        HotIndexUtil.updateArticleHotIndex(article);
         return null;
     }
 
