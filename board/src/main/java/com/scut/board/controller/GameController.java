@@ -1,18 +1,18 @@
 package com.scut.board.controller;
 
 import com.scut.board.service.GameService;
+import com.scut.common.dto.request.BoardCommentParam;
+import com.scut.common.dto.request.GameParam;
 import com.scut.common.dto.response.GameDetailsDto;
 import com.scut.common.dto.response.SearchGameListDto;
 import com.scut.common.response.MultiResponse;
 import com.scut.common.response.SingleResponse;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -56,5 +56,14 @@ public class GameController {
             if (downloadUrl.isEmpty()) return new SingleResponse<String>().error(null, 3002, "游戏的下载地址不存在");
             else return new SingleResponse<String>().success(downloadUrl);
         } else return new SingleResponse<String>().error(null, 3001, "游戏的ID不存在");
+    }
+
+    @GetMapping("/submit")
+    @ApiOperation(value = "/submit", notes = "添加游戏")
+    public SingleResponse<Boolean> addGame(@RequestBody GameParam game) {
+
+        Boolean status = gameService.addGame(game);
+
+        return new SingleResponse<Boolean>().success(true);
     }
 }

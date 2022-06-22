@@ -4,6 +4,7 @@ import com.scut.board.entity.GameDetails;
 import com.scut.board.entity.SearchGameList;
 import com.scut.board.mapper.GameDetailsMapper;
 import com.scut.board.mapper.SearchGameListMapper;
+import com.scut.common.dto.request.GameParam;
 import com.scut.common.dto.response.GameDetailsDto;
 import com.scut.common.dto.response.SearchGameListDto;
 import org.springframework.stereotype.Service;
@@ -64,5 +65,19 @@ public class GameServiceImpl implements GameService {
             searchGameListDtoList.add(searchGameListDto);
         }
         return searchGameListDtoList;
+    }
+
+    @Override
+    public Boolean addGame(GameParam game) {
+        long gameCount = gameDetailsMapper.selectGameDetailsByName(game.getName());
+        if (gameCount != 0) return false;
+        gameDetailsMapper.addGame(game.getName(),
+                game.getCover(),
+                game.getLogo(),
+                game.getIssuedTime(),
+                game.getDownloadLink(),
+                game.getClassify(),
+                game.getDescription());
+        return true;
     }
 }
